@@ -1,0 +1,22 @@
+{
+    
+    "bitwise"       : true,
+    "curly"         : true,
+    "eqeqeq"        : true,
+    "immed"         : true,
+    "newcap"        : true,
+    "nonew"         : true,
+    "undef"         : true,
+    "strict"        : false,
+    "trailing"      : true,
+
+    "debug"         : true,
+
+    "browser"       : true,
+    "jquery"        : true,
+    "node"          : true,
+
+    "predef"        : [
+        "angular"
+    ]
+}

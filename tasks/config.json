@@ -1,0 +1,54 @@
+{
+	"debug": {
+		"css": {
+			"libs": [],
+			"src": ["./source/assets/styles/main.scss"],
+			"dest": "./debug/assets/"
+		},
+		"js": {
+			"libs": [
+				"./source/libs/angular-route.js",
+				"./source/libs/underscore.js"
+			],
+			"src": ["./source/app/**/*.js"],
+			"dest": "./debug/assets/"
+		},
+		"templates": {
+			"src": "./source/app/views/**/*.html",
+			"dest": "./debug/views"
+		},
+		"copy": {
+			"src": [
+				"./source/**",
+				"!./source/{app,app/**/*,libs,libs/**/*,tests,tests/**/*,assets/styles,assets/styles/**/*}"
+			],
+			"dest": "./debug/"
+		}
+	},
+	"release": {
+		"css": {
+			"libs": [],
+			"src": ["./source/assets/styles/main.scss"],
+			"dest": "./release/assets"
+		},
+		"js": {
+			"libs": [
+				"./source/libs/angular-route.js",
+				"./source/libs/underscore.js"
+			],
+			"src": ["./source/app/**/*.js"],
+			"dest": "./release/assets"
+		},
+		"templates": {
+			"src": "./source/app/views/**/*.html",
+			"dest": "./release/views"
+		},
+		"copy": {
+			"src": [
+				"./source/**",
+				"!./source/{app,app/**/*,libs,libs/**/*,tests,tests/**/*,assets/styles,assets/styles/**/*}"
+			],
+			"dest": "./release"
+		}
+	}
+}
