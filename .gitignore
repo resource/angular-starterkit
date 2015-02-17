@@ -52,3 +52,4 @@ node_modules
 
 release
 debug
+tests/temp.js
