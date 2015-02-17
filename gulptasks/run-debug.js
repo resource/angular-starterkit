@@ -8,27 +8,24 @@ var watch = require('gulp-watch');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var child_process = require('child_process');
-var _ = require('underscore');
 
-var config = require('./config.json').debug;
+var config = require('./config.json');
 
 // ============================================================
 // === Constants ==============================================
 // ============================================================
 
-var CSS = 'css';
-var CSS_SRC = 'csssrc';
-var CSS_LIBS = 'csslibs';
-
-var JS = 'js';
-var JS_SRC = 'jssrc';
-var JS_LIBS = 'jslibs';
-
-var TEMPLATES = 'templates';
-
-var COPY = 'copy';
+var CSS = 'debug-css';
+var CSS_SRC = 'debug-csssrc';
+var CSS_LIBS = 'debug-csslibs';
+var JS = 'debug-js';
+var JS_SRC = 'debug-jssrc';
+var JS_LIBS = 'debug-jslibs';
+var TEMPLATES = 'debug-templates';
+var COPY = 'debug-copy';
 var WATCH = 'watch';
 var LAUNCH = 'launch';
+var DEBUG_DEST = './debug';
 
 // ============================================================
 // === CSS Tasks ==============================================
@@ -37,7 +34,7 @@ var LAUNCH = 'launch';
 gulp.task(CSS_LIBS, function(done) {
 	gulp.src(config.css.libs)
 		.pipe(concat('libs.css'))
-		.pipe(gulp.dest(config.css.dest));
+		.pipe(gulp.dest(DEBUG_DEST + config.css.dest));
 	done();
 });
 
@@ -45,7 +42,7 @@ gulp.task(CSS_SRC, function(done) {
 	sass(config.css.src, {
 			sourcemap: true
 		}).pipe(sourcemaps.write())
-		.pipe(gulp.dest(config.css.dest));
+		.pipe(gulp.dest(DEBUG_DEST + config.css.dest));
 	done();
 });
 
@@ -58,14 +55,14 @@ gulp.task(CSS, [CSS_LIBS, CSS_SRC]);
 gulp.task(JS_LIBS, function(done) {
 	gulp.src(config.js.libs)
 		.pipe(concat('libs.js'))
-		.pipe(gulp.dest(config.js.dest));
+		.pipe(gulp.dest(DEBUG_DEST + config.js.dest));
 	done();
 });
 
 gulp.task(JS_SRC, function(done) {
 	gulp.src(config.js.src)
 		.pipe(concat('main.js'))
-		.pipe(gulp.dest(config.js.dest));
+		.pipe(gulp.dest(DEBUG_DEST + config.js.dest));
 	done();
 });
 
@@ -76,7 +73,7 @@ gulp.task(JS, [JS_LIBS, JS_SRC]);
 // ============================================================
 
 gulp.task(TEMPLATES, function(done) {
-	gulp.src(config.templates.src).pipe(gulp.dest(config.templates.dest));
+	gulp.src(config.templates.src).pipe(gulp.dest(DEBUG_DEST + config.templates.dest));
 	done();
 });
 
@@ -86,7 +83,7 @@ gulp.task(TEMPLATES, function(done) {
 
 gulp.task(COPY, function(done) {
 	gulp.src(config.copy.src)
-		.pipe(gulp.dest(config.copy.dest));
+		.pipe(gulp.dest(DEBUG_DEST + config.copy.dest));
 	done();
 });
 
@@ -95,7 +92,7 @@ gulp.task(COPY, function(done) {
 // ============================================================
 
 gulp.task(LAUNCH, function(done) {
-	child_process.spawn('node', ["./debug/server.js"]);
+	child_process.spawn('node', ['./debug/server.js']);
 	done();
 });
 
@@ -106,8 +103,8 @@ gulp.task(LAUNCH, function(done) {
 gulp.task(WATCH, function() {
 	gulp.watch(['./source/**/*','!./source/app','!./source/app/assets/styles'], [COPY]);
 	gulp.watch(['./source/assets/styles/**/*'], [CSS_SRC]);
-	gulp.watch(["./source/app/**/*.js"], [JS_SRC]);
-	gulp.watch(["./source/app/**/*.html"], [TEMPLATES]);
+	gulp.watch(['./source/app/**/*.js'], [JS_SRC]);
+	gulp.watch(['./source/app/**/*.html'], [TEMPLATES]);
 });
 
 // ============================================================

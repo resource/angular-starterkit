@@ -1,0 +1,26 @@
+{
+	"css": {
+		"libs": [],
+		"src": ["./source/assets/styles/main.scss"],
+		"dest": "/assets/"
+	},
+	"js": {
+		"libs": [
+			"./source/libs/angular-route.js",
+			"./source/libs/underscore.js"
+		],
+		"src": ["./source/app/**/*.js"],
+		"dest": "/assets/"
+	},
+	"templates": {
+		"src": "./source/app/views/**/*.html",
+		"dest": "/views"
+	},
+	"copy": {
+		"src": [
+			"./source/**",
+			"!./source/{app,app/**/*,libs,libs/**/*,assets/styles,assets/styles/**/*}"
+		],
+		"dest": "/"
+	}
+}

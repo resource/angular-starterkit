@@ -9,7 +9,7 @@
 ## Installation
 
 1. Clone repo.
-2. Copy it's contents to a new local directory.
+2. Copy it's contents to a new local directory or update repo origin.
 3. Commit to new repo.
 2. Run `npm install` within the root of the local repo.
 3. Run one of the gulp tasks depending on the need.
@@ -19,6 +19,7 @@
 Available tasks include:
 
 1. **`run-debug`**
++ 
 2. **`run-inspect`**
 3. **`build-release`**
 
