@@ -19,9 +19,9 @@
 Available tasks include:
 
 1. **`run-debug`**
-+ 
 2. **`run-inspect`**
-3. **`build-release`**
+3. **`run-tests`**
+4. **`build-release`**
 
 These tasks are located in the tasks folder in the root directory of the repository.
 
