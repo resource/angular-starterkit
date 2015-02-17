@@ -4,7 +4,6 @@
 
 var gulp = require('gulp');
 var sass = require('gulp-ruby-sass');
-var watch = require('gulp-watch');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var child_process = require('child_process');
@@ -15,16 +14,16 @@ var config = require('./config.json');
 // === Constants ==============================================
 // ============================================================
 
-var CSS = 'debug-css';
-var CSS_SRC = 'debug-csssrc';
-var CSS_LIBS = 'debug-csslibs';
-var JS = 'debug-js';
-var JS_SRC = 'debug-jssrc';
-var JS_LIBS = 'debug-jslibs';
-var TEMPLATES = 'debug-templates';
-var COPY = 'debug-copy';
-var WATCH = 'watch';
-var LAUNCH = 'launch';
+var CSS_DEBUG = 'css-debug';
+var CSS_SRC = 'css-src-debug';
+var CSS_LIBS = 'css-libs-debug';
+var JS_DEBUG = 'js-debug';
+var JS_SRC = 'js-src-debug';
+var JS_LIBS = 'js-libs-debug';
+var TEMPLATES = 'templates-debug';
+var COPY = 'copy-debug';
+var WATCH = 'watch-debug';
+var LAUNCH = 'launch-debug';
 var DEBUG_DEST = './debug';
 
 // ============================================================
@@ -46,7 +45,7 @@ gulp.task(CSS_SRC, function(done) {
 	done();
 });
 
-gulp.task(CSS, [CSS_LIBS, CSS_SRC]);
+gulp.task(CSS_DEBUG, [CSS_LIBS, CSS_SRC]);
 
 // ============================================================
 // === JS Tasks ===============================================
@@ -66,7 +65,7 @@ gulp.task(JS_SRC, function(done) {
 	done();
 });
 
-gulp.task(JS, [JS_LIBS, JS_SRC]);
+gulp.task(JS_DEBUG, [JS_LIBS, JS_SRC]);
 
 // ============================================================
 // === Templates ==============================================
@@ -111,4 +110,4 @@ gulp.task(WATCH, function() {
 // === Macro Task =============================================
 // ============================================================
 
-gulp.task('run-debug', [CSS, JS, TEMPLATES, COPY, LAUNCH, WATCH]);
+gulp.task('run-debug', [CSS_DEBUG, JS_DEBUG, TEMPLATES, COPY, LAUNCH, WATCH]);

@@ -2,7 +2,13 @@ var userService = angular.module('usersService', []);
 
 userService.factory('UserService', function() {
 
-	var names = ['Jill', 'Tony', 'Matt', 'Natalie', 'Eric', 'Emmarie', 'Declan', 'Brendan', 'Katlyn'];
+	var names = [
+		'Steve Zissou',
+		'Ned Plimpton',
+		'Jane Winslett-Richardson',
+		'Klaus Daimler',
+		'Alistair Hennessey'
+	];
 
 	return {
 		all: function() {

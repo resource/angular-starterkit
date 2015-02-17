@@ -7,20 +7,29 @@ var sass = require('gulp-ruby-sass');
 var concat = require('gulp-concat');
 var cssmin = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
-
+var del = require('del');
 var config = require('./config.json');
 
 // ============================================================
 // === Constants ==============================================
 // ============================================================
 
-var CSS_SRC = 'release-csssrc';
-var CSS_LIBS = 'release-csslibs';
-var JS_SRC = 'release-jssrc';
-var JS_LIBS = 'release-jslibs';
-var TEMPLATES = 'release-templates';
-var COPY = 'release-copy';
+var CSS_SRC = 'css-src-release';
+var CSS_LIBS = 'css-libs-release';
+var JS_SRC = 'js-src-release';
+var JS_LIBS = 'js-libs-release';
+var TEMPLATES = 'templates-release';
+var COPY = 'copy-release';
 var RELEASE_DEST = './release';
+var CLEAN = 'clean-release';
+
+// ============================================================
+// === Cleanup ================================================
+// ============================================================
+
+gulp.task(CLEAN, function(done) {
+	del([RELEASE_DEST + '/*'], done);
+});
 
 // ============================================================
 // === CSS Tasks ==============================================
@@ -85,4 +94,4 @@ gulp.task(COPY, function(done) {
 // === Macro Task =============================================
 // ============================================================
 
-gulp.task('build-release', [CSS_LIBS, CSS_SRC, JS_LIBS, JS_SRC, TEMPLATES, COPY]);
+gulp.task('build-release', [CLEAN, CSS_LIBS, CSS_SRC, JS_LIBS, JS_SRC, TEMPLATES, COPY]);

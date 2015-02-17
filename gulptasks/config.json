@@ -22,5 +22,26 @@
 			"!./source/{app,app/**/*,libs,libs/**/*,assets/styles,assets/styles/**/*}"
 		],
 		"dest": "/"
+	},
+	"protractor": {},
+	"karma": {
+		"basePath": "",
+		"frameworks": ["jasmine"],
+		"files": [
+			"./tests/libs/angular.js",
+			"./tests/libs/angular-mocks.js",
+			"./source/libs/**/*.js",
+			"./source/app/app.js",
+			"./source/app/**/*.js",
+			"./tests/specs/**/*.js"
+		],
+		"exclude": [],
+		"preprocessors": {},
+		"reporters": ["mocha"],
+		"port": 9876,
+		"colors": true,
+		"autoWatch": false,
+		"browsers": ["PhantomJS"],
+		"singleRun": true
 	}
 }
