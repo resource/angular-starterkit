@@ -8,7 +8,7 @@ var concat = require('gulp-concat');
 var cssmin = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var del = require('del');
-var config = require('./config.json');
+var config = require('../gulpconfig.json');
 
 // ============================================================
 // === Constants ==============================================

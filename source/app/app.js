@@ -1,1 +1,1 @@
-angular.module('myApp', ['partial', 'content']);
+angular.module('myApp', ['content']);

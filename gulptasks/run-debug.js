@@ -7,8 +7,9 @@ var sass = require('gulp-ruby-sass');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var child_process = require('child_process');
+var watch = require('gulp-watch');
 
-var config = require('./config.json');
+var config = require('../gulpconfig.json');
 
 // ============================================================
 // === Constants ==============================================
@@ -100,10 +101,10 @@ gulp.task(LAUNCH, function(done) {
 // ============================================================
 
 gulp.task(WATCH, function() {
-	gulp.watch(['./source/**/*','!./source/app','!./source/app/assets/styles'], [COPY]);
+	gulp.watch(['./source/**/*', '!./source/app', '!./source/app/assets/styles'], [COPY]);
 	gulp.watch(['./source/assets/styles/**/*'], [CSS_SRC]);
 	gulp.watch(['./source/app/**/*.js'], [JS_SRC]);
-	gulp.watch(['./source/app/**/*.html'], [TEMPLATES]);
+	gulp.watch(['./source/app/views/*.html'], [TEMPLATES]);
 });
 
 // ============================================================

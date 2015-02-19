@@ -6,7 +6,7 @@ var gulp = require('gulp');
 var karma = require('karma').server;
 var concat = require('gulp-concat');
 var _ = require('underscore');
-var config = require('./config.json');
+var config = require('../gulpconfig.json');
 
 // ============================================================
 // === Testing Tasks ==========================================
