@@ -27,9 +27,9 @@ These tasks are located in the tasks folder in the root directory of the reposit
 
 Running these tasks is all handled through npm scripts.
 
-1. To run the `run-debug` task run the npm command `npm start`
-2. To run the `run-tests` task run the npm command `npm test`
-3. To run the `build-release` task run the npm command `npm run-script release`
+1. To run the `run-debug` gulp task run the npm command `npm start`
+2. To run the `run-tests` gulp task run the npm command `npm test`
+3. To run the `build-release` gulp task run the npm command `npm run-script release`
 
 ## Browser Synchronization
 
