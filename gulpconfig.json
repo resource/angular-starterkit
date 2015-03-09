@@ -1,10 +1,10 @@
 {
-	"css": {
+	"styles": {
 		"libs": [],
 		"src": ["./source/assets/styles/main.scss"],
 		"dest": "/assets/"
 	},
-	"js": {
+	"scripts": {
 		"libs": [
 			"./source/libs/angular-route.js",
 			"./source/libs/underscore.js"
@@ -13,15 +13,30 @@
 		"dest": "/assets/"
 	},
 	"templates": {
-		"src": "./source/app/views/**/*.html",
-		"dest": "/views"
+		"copy": {
+			"src": ["./source/app/views/*.html"],
+			"dest": "/views"
+		},
+		"compile": {
+			"src": ["./source/app/views/partials/*.html"],
+			"dest": "/assets"
+		}
 	},
 	"copy": {
 		"src": [
-			"./source/**",
-			"!./source/{app,app/**/*,libs,libs/**/*,assets/styles,assets/styles/**/*}"
+			"./source/{favicon.ico,*.html,*.js}",
+			"./source/**/{images,videos,fonts}/**/*"
 		],
 		"dest": "/"
+	},
+	"config": {
+		"debug": {
+			"name": "configiguration",
+			"constants": {
+				"foo":"bar"
+			},
+			"deps": []
+		}
 	},
 	"protractor": {},
 	"karma": {

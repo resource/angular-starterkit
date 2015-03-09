@@ -9,7 +9,7 @@
     "undef"         : true,
     "strict"        : false,
     "trailing"      : true,
-    "quotmark"      : true,
+    "quotmark"      : false,
 
     "debug"         : true,
 

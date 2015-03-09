@@ -7,91 +7,97 @@ var sass = require('gulp-ruby-sass');
 var concat = require('gulp-concat');
 var cssmin = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
+var templateCache = require('gulp-angular-templatecache');
 var del = require('del');
+var ngConstant = require('gulp-ng-constant');
+var merge = require('merge2');
+
 var config = require('../gulpconfig.json');
-
-// ============================================================
-// === Constants ==============================================
-// ============================================================
-
-var CSS_SRC = 'css-src-release';
-var CSS_LIBS = 'css-libs-release';
-var JS_SRC = 'js-src-release';
-var JS_LIBS = 'js-libs-release';
-var TEMPLATES = 'templates-release';
-var COPY = 'copy-release';
-var RELEASE_DEST = './release';
-var CLEAN = 'clean-release';
 
 // ============================================================
 // === Cleanup ================================================
 // ============================================================
 
-gulp.task(CLEAN, function(done) {
-	del([RELEASE_DEST + '/*'], done);
+gulp.task('clean-release', function(done) {
+	del(['./release' + '/*'], done);
 });
 
 // ============================================================
 // === CSS Tasks ==============================================
 // ============================================================
 
-gulp.task(CSS_LIBS, function(done) {
-	gulp.src(config.css.libs)
+gulp.task('styles-libs-release', function() {
+	return gulp.src(config.styles.libs)
 		.pipe(concat('libs.css'))
 		.pipe(cssmin())
-		.pipe(gulp.dest(RELEASE_DEST + config.css.dest));
-	done();
+		.pipe(gulp.dest('./release' + config.styles.dest));
 });
 
-gulp.task(CSS_SRC, function(done) {
-	sass(config.css.src)
+gulp.task('styles-src-release', function() {
+	return sass(config.styles.src)
 		.pipe(cssmin())
-		.pipe(gulp.dest(RELEASE_DEST + config.css.dest));
-	done();
+		.pipe(gulp.dest('./release' + config.styles.dest));
 });
 
 // ============================================================
 // === JS Tasks ===============================================
 // ============================================================
 
-gulp.task(JS_LIBS, function(done) {
-	gulp.src(config.js.libs)
+gulp.task('scripts-libs-release', function() {
+	return gulp.src(config.scripts.libs)
 		.pipe(concat('libs.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest(RELEASE_DEST + config.js.dest));
-	done();
+		.pipe(gulp.dest('./release' + config.scripts.dest));
 });
 
-gulp.task(JS_SRC, function(done) {
-	gulp.src(config.js.src)
+gulp.task('scripts-src-release', function() {
+	var src = gulp.src(config.scripts.src);
+	var appConfig = gulp.src('./source/app/config.json')
+		.pipe(ngConstant(config.config.debug));
+	return merge(src, appConfig)
 		.pipe(concat('main.js'))
 		.pipe(uglify())
-		.pipe(gulp.dest(RELEASE_DEST + config.js.dest));
-	done();
+		.pipe(gulp.dest('./release' + config.scripts.dest));
 });
 
 // ============================================================
 // === Templates ==============================================
 // ============================================================
 
-gulp.task(TEMPLATES, function(done) {
-	gulp.src(config.templates.src)
-		.pipe(gulp.dest(RELEASE_DEST + config.templates.dest));
-	done();
+gulp.task('templates-compile-release', function() {
+	return gulp.src(config.templates.compile.src)
+		.pipe(templateCache('templates.js', {
+			module: 'templatescache',
+			standalone: true,
+			root: 'views/partials'
+		}))
+		.pipe(uglify())
+		.pipe(gulp.dest('./release' + config.templates.compile.dest));
+});
+
+gulp.task('templates-copy-release', function() {
+	return gulp.src(config.templates.copy.src)
+		.pipe(gulp.dest('./release' + config.templates.copy.dest));
 });
 
 // ============================================================
 // === Static Files ===========================================
 // ============================================================
 
-gulp.task(COPY, function(done) {
-	gulp.src(config.copy.src)
-		.pipe(gulp.dest(RELEASE_DEST + config.copy.dest));
-	done();
+gulp.task('copy-release', function() {
+	return gulp.src(config.copy.src)
+		.pipe(gulp.dest('./release' + config.copy.dest));
 });
 
 // ============================================================
 // === Macro Task =============================================
 // ============================================================
 
-gulp.task('build-release', [CLEAN, CSS_LIBS, CSS_SRC, JS_LIBS, JS_SRC, TEMPLATES, COPY]);
+gulp.task('build-release', ['clean-release'], function() {
+	gulp.start(
+		'styles-libs-release', 'styles-src-release', // styles
+		'scripts-libs-release', 'scripts-src-release', // scripts
+		'templates-compile-release', 'templates-copy-release', // templates
+		'copy-release' // copy
+	);
+});

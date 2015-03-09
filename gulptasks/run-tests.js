@@ -12,11 +12,10 @@ var config = require('../gulpconfig.json');
 // === Testing Tasks ==========================================
 // ============================================================
 
-gulp.task('karma-concat', function(done) {
-	gulp.src(config.karma.files)
+gulp.task('karma-concat', function() {
+	return gulp.src(config.karma.files)
 		.pipe(concat('temp.js'))
 		.pipe(gulp.dest('./tests/'));
-	done();
 });
 
 gulp.task('karma-start', function(done) {
@@ -29,4 +28,6 @@ gulp.task('karma-start', function(done) {
 // === Macro Task =============================================
 // ============================================================
 
-gulp.task('run-tests', ['karma-concat', 'karma-start']);
+gulp.task('run-tests', ['karma-concat'], function() {
+	gulp.start('karma-start');
+});
