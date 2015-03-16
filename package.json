@@ -43,5 +43,5 @@
     "test": "gulp run-tests",
     "release": "gulp build-release"
   },
-  "engine": "node 0.10.x"
+  "engine": "node >=0.10.x"
 }
