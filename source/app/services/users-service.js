@@ -1,6 +1,4 @@
-var userService = angular.module('usersService', []);
-
-userService.factory('UserService', function() {
+angular.module('services').factory('UserService', function() {
 
 	var names = [
 		'Steve Zissou',

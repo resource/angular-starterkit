@@ -1,4 +1,4 @@
-angular.module('myApp').directive('myA', function() {
+angular.module('directives').directive('myA', function() {
 	return {
 		restrict: 'E',
 		scope: {

@@ -1,33 +1,25 @@
-// ============================================================
-// === Required ===============================================
-// ============================================================
-
 var gulp = require('gulp');
 var karma = require('karma').server;
-var concat = require('gulp-concat');
 var _ = require('underscore');
-var config = require('../gulpconfig.json');
+var debug = require('gulp-debug');
+var config = require('../karma.conf');
 
 // ============================================================
 // === Testing Tasks ==========================================
 // ============================================================
 
-gulp.task('karma-concat', function() {
-	return gulp.src(config.karma.files)
-		.pipe(concat('temp.js'))
-		.pipe(gulp.dest('./tests/'));
-});
+var karmaConfig = {};
+
+config({set:function(conf){
+    karmaConfig = conf;
+}});
 
 gulp.task('karma-start', function(done) {
-	karma.start(_.extend({
-		files: ['./temp.js']
-	}, config.karma), done);
+    karma.start(karmaConfig, done);
 });
 
 // ============================================================
 // === Macro Task =============================================
 // ============================================================
 
-gulp.task('run-tests', ['karma-concat'], function() {
-	gulp.start('karma-start');
-});
+gulp.task('run-tests', ['karma-start']);

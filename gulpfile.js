@@ -1,10 +1,12 @@
+// run-tests
+
+require('./gulptasks/run-tests');
+
 // run-debug
 
 require('./gulptasks/run-debug');
 
-// run-tests
 
-require('./gulptasks/run-tests');
 
 // run-inspect ** Not Yet Implemented
 

@@ -1,4 +1,4 @@
-angular.module('myApp').filter('reverse', function() {
+angular.module('filters').filter('reverse', function() {
   
   return function(input) {
     

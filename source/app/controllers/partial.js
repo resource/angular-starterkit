@@ -1,3 +1,3 @@
-angular.module('myApp').controller('PartialController', ['$scope', function($scope) {
+angular.module('controllers').controller('PartialController', ['$scope', function($scope) {
 	$scope.data = 'Partial';
 }]);
