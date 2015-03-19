@@ -2,7 +2,7 @@
 
 ## Requirements
 
-+ [Node](http://nodejs.org/) version >0.10
++ [Node](http://nodejs.org/) version >=0.10.x
 + [NPM](https://www.npmjs.com/) >2.5
 + [Sass](http://sass-lang.com/) >3.4
 
@@ -19,17 +19,16 @@
 Available tasks include:
 
 1. **`run-debug`**
-2. **`run-inspect`** *(Not currently implemented)*
 3. **`run-tests`**
-4. **`build-release`**
+4. **`run-build`**
 
 These tasks are located in the tasks folder in the root directory of the repository.
 
 Running these tasks is all handled through npm scripts.
 
-1. To run the `run-debug` gulp task run the npm command `npm start`
+1. To run the `run-debug` gulp task run the npm command `npm run debug`
 2. To run the `run-tests` gulp task run the npm command `npm test`
-3. To run the `build-release` gulp task run the npm command `npm run-script release`
+3. To run the release version of `run-build` gulp task run the npm command `npm run release`
 
 ## Browser Synchronization
 

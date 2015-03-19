@@ -20,7 +20,6 @@
   },
   "devDependencies": {
     "del": "^1.1.1",
-    "escape-html": "^1.0.1",
     "gulp": "^3.8.11",
     "gulp-angular-templatecache": "^1.5.0",
     "gulp-concat": "^2.4.3",
@@ -42,12 +41,13 @@
     "karma-mocha-reporter": "^0.3.2",
     "karma-phantomjs-launcher": "^0.1.4",
     "merge2": "^0.3.1",
-    "through2": "^0.6.3"
+    "through2": "^0.6.3",
+    "yargs": "^3.5.4"
   },
   "scripts": {
     "debug": "gulp --gulpfile ./build-scripts/gulpfile.js run-debug",
     "test": "gulp --gulpfile ./build-scripts/gulpfile.js run-tests",
-    "release": "gulp --gulpfile ./build-scripts/gulpfile.js build-release"
+    "release": "gulp --gulpfile ./build-scripts/gulpfile.js --buildtype release run-build"
   },
   "engine": "node >=0.10.x"
 }

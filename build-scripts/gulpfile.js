@@ -1,4 +1,4 @@
-// run-debug
+// run-build
 
 require('./tasks/run-build');
 
@@ -9,7 +9,3 @@ require('./tasks/run-tests');
 // run-debug
 
 require('./tasks/run-debug');
-
-// build-release
-
-require('./tasks/build-release');

@@ -21,7 +21,6 @@ module.exports = {
         if (!dest || dest == '') {
             return {};
         }
-        ;
 
         var components = dest.split("/");
 

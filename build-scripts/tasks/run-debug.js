@@ -13,26 +13,29 @@ var nodemon = require('gulp-nodemon');
 // === Constants ==============================================
 // ============================================================
 
-const basePath = "../";
-const scriptsLibs = config.scripts.libs;
-const scriptsSrc = config.scripts.src;
-const stylesLibs = config.styles.libs;
-const stylesSrc = config.styles.src;
-const viewsCopy = config.views.copy;
-const viewsCompile = config.views.compile;
-const staticSrc = config.static.src;
+const BASE_PATH = "../";
+
+// ============================================================
+// === Variables ==============================================
+// ============================================================
+
+var scriptLibraries = config.scripts.libs;
+var scriptSources = config.scripts.src;
+var styleLibraries = config.styles.libs;
+var styleSources = config.styles.src;
+var viewsCopy = config.views.copy;
+var viewsCompile = config.views.compile;
+var staticSources = config.static.src;
 
 // ============================================================
 // === Launch =================================================
 // ============================================================
 
-gulp.task('launch-debug', function () {
+gulp.task('launch', function () {
     nodemon({
         script: '../debug/server.js',
         ext: 'ejs js',
-        ignore: ['**/*'],
-    }).on('restart', function () {
-        // ...
+        ignore: ['**/*']
     });
 });
 
@@ -40,54 +43,54 @@ gulp.task('launch-debug', function () {
 // === Watch ==================================================
 // ============================================================
 
-gulp.task('watch-debug', function () {
+gulp.task('watch', function () {
 
-    if (configUtils.shouldWatchSection(stylesLibs)) {
-        var files = configUtils.watchFilesForSection(stylesLibs);
-        watch(configUtils.prefixFiles(files, basePath), function () {
-            gulp.start('styles-src-debug');
+    if (configUtils.shouldWatchSection(styleLibraries)) {
+        var files = configUtils.watchFilesForSection(styleLibraries);
+        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
+            gulp.start('styles-src');
         });
     }
 
-    if (configUtils.shouldWatchSection(stylesSrc)) {
-        var files = configUtils.watchFilesForSection(stylesSrc);
-        watch(configUtils.prefixFiles(files, basePath), function () {
-            gulp.start('styles-src-debug');
+    if (configUtils.shouldWatchSection(styleSources)) {
+        var files = configUtils.watchFilesForSection(styleSources);
+        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
+            gulp.start('styles-src');
         });
     }
 
-    if (configUtils.shouldWatchSection(scriptsSrc)) {
-        var files = configUtils.watchFilesForSection(scriptsSrc);
-        watch(configUtils.prefixFiles(files, basePath), function () {
-            gulp.start(['scripts-src-debug', 'views-compile-debug']);
+    if (configUtils.shouldWatchSection(scriptSources)) {
+        var files = configUtils.watchFilesForSection(scriptSources);
+        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
+            gulp.start(['scripts-src', 'views-compile']);
         });
     }
 
-    if (configUtils.shouldWatchSection(scriptsLibs)) {
-        var files = configUtils.watchFilesForSection(scriptsLibs);
-        watch(configUtils.prefixFiles(files, basePath), function () {
-            gulp.start('scripts-libs-debug');
+    if (configUtils.shouldWatchSection(scriptLibraries)) {
+        var files = configUtils.watchFilesForSection(scriptLibraries);
+        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
+            gulp.start('scripts-libs');
         });
     }
 
     if (configUtils.shouldWatchSection(viewsCopy)) {
         var files = configUtils.watchFilesForSection(viewsCopy);
-        watch(configUtils.prefixFiles(files, basePath), function () {
-            gulp.start('views-copy-debug');
+        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
+            gulp.start('views-copy');
         });
     }
 
     if (configUtils.shouldWatchSection(viewsCompile)) {
         var files = configUtils.watchFilesForSection(viewsCompile);
-        watch(configUtils.prefixFiles(files, basePath), function () {
-            gulp.start('views-compile-debug');
+        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
+            gulp.start('views-compile');
         });
     }
 
-    if (configUtils.shouldWatchSection(staticSrc)) {
-        var files = configUtils.watchFilesForSection(staticSrc);
-        watch(configUtils.prefixFiles(files, basePath), function () {
-            gulp.start('static-debug');
+    if (configUtils.shouldWatchSection(staticSources)) {
+        var files = configUtils.watchFilesForSection(staticSources);
+        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
+            gulp.start('static');
         });
     }
 
@@ -99,5 +102,5 @@ gulp.task('watch-debug', function () {
 // ============================================================
 
 gulp.task('run-debug', ['run-build'], function () {
-    gulp.start('launch-debug', 'watch-debug');
+    gulp.start('launch', 'watch');
 });

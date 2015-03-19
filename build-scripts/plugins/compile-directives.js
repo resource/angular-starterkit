@@ -3,8 +3,6 @@ var fs = require('fs');
 var gutil = require('gulp-util');
 var PluginError = gutil.PluginError;
 var jsStringEscape = require('js-string-escape');
-var escapeHtml = require('escape-html');
-
 
 const PLUGIN_NAME = 'compile-directives';
 
