@@ -34,7 +34,8 @@
         "inject",
         "expect",
         "spyOn",
-        "_"
+        "_",
+        "require"
         
     ]
 }

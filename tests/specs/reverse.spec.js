@@ -1,9 +1,9 @@
 describe('reverse filter', function() {
 
-	var myApp;
+	var filters;
 
 	beforeEach(function() {
-		myApp = module('myApp');
+        filters = module('filters');
 	});
 
 	// beforeEach(module('myApp'));

@@ -1,20 +1,25 @@
 var gulp = require('gulp');
 var karma = require('karma').server;
+var concat = require('gulp-concat');
 var _ = require('underscore');
-var debug = require('gulp-debug');
-var config = require('../karma.conf');
+
+var karmaConfig = require('../../build-config.js').karma;
+var configUtils = require('../utils/config-utils');
 
 // ============================================================
 // === Testing Tasks ==========================================
 // ============================================================
 
-var karmaConfig = {};
+karmaConfig.files = [
+    '../debug/assets/libs.js',
+    '../debug/assets/templates.js',
+    '../debug/assets/main.js',
+    '../tests/libs/**/*.js',
+    '../tests/specs/**/*.js'
+];
+//karmaConfig.base
 
-config({set:function(conf){
-    karmaConfig = conf;
-}});
-
-gulp.task('karma-start', function(done) {
+gulp.task('karma-start', function (done) {
     karma.start(karmaConfig, done);
 });
 
@@ -22,4 +27,6 @@ gulp.task('karma-start', function(done) {
 // === Macro Task =============================================
 // ============================================================
 
-gulp.task('run-tests', ['karma-start']);
+gulp.task('run-tests', ['run-build'], function () {
+    gulp.start('karma-start');
+});
