@@ -159,7 +159,11 @@ gulp.task('views-compile', function () {
 
     if (buildType === BUILDTYPE_DEBUG) {
         return gulp.src(files)
-            .pipe(templateCache(name, {module: name.split('.')[0], standalone: true}))
+            .pipe(templateCache(name, {
+                root:"/views/templates/",
+                module: name.split('.')[0],
+                standalone: true
+            }))
             .pipe(gulp.dest(DEBUG_DESTINATION + path));
     }
 

@@ -30,7 +30,10 @@ var config = module.exports = {
 
         src: {
 
+            // same as styles libs
             files: ['source/assets/styles/main.scss'],
+
+            // same as styles libs
             watch: ['source/**/*.scss'],
 
             /**
@@ -43,75 +46,107 @@ var config = module.exports = {
     },
 
     /**
-     * The scripts section is all of our source and library javascript files used in
-     * the application.
-     *
+     * 'scripts' references both the javascript files in the libs directory as well as the
+     * entire app directory (minus the views subdirectory). The libs will be concatonated into
+     * one file, while the application logic will be compiled into an application specific file.
      */
     scripts: {
 
         libs: {
 
-            files: ['source/libs/angular.js', 'source/libs/jquery.js', 'source/libs/*.js'],
-            watch: ['source/libs/**/*.js'],
-            dest: 'assets/libs.js'
+            // same as styles libs
+            files: [
+                'source/libs/angular.js',
+                'source/libs/jquery.js',
+                'source/libs/*.js'
+            ],
 
+            // same as styles libs
+            watch: ['source/libs/**/*.js'],
+
+            // same as styles libs
+            dest: 'assets/libs.js'
         },
 
         src: {
 
+            // same as styles libs
             files: ['source/app/**/*.js'],
-            watch: ['source/app/**/*.js','source/app/directives/**/*.html'],
-            dest: 'assets/main.js'
 
+            // same as styles libs
+            watch: [
+                'source/app/**/*.js',
+                'source/app/directives/**/*.html'
+            ],
+
+            // same as styles libs
+            dest: 'assets/main.js'
         }
     },
 
     /**
-     * THROW IN EXPLANATION HERE
+     * There are two ways that views are moved into build directories. They can either be
+     * a straight copy or they can be pre-cached using angulars templateCache module.
      */
     views: {
 
-        /**
-         * THROW IN EXPLANATION HERE
-         */
         copy: {
 
-            files: ['source/app/views/**/*.html'],
-            watch: ['source/app/views/**/*.html'],
+            // same as styles libs
+            files: ['source/app/views/*.html'],
+
+            // same as styles libs
+            watch: ['source/app/views/*.html'],
 
             /**
-             * Destination here is a directory without a file because we're just copying
-             * the views over to the output directory
+             * By default this is set to views in order to keep some consistancy in how
+             * views are referenced within parts of the application like the router. If you
+             * change this you will have to change how you are referencing views within
+             * your application.
              */
             dest: 'views'
-
         },
 
-        /**
-         * THROW IN EXPLANATION HERE
-         */
         compile: {
 
-            files: ['source/app/views/**/*.html'],
-            watch: [],
+            // same as styles libs
+            files: ['source/app/views/templates/**/*.html'],
+
+            // same as styles libs
+            watch: ['source/app/views/templates/**/*.html'],
 
             /**
-             * In the case of pre-compiling views into angulars templateCace templates is the name
-             * of the javascript file as well as the name of the module you'll need to import
-             * into your application.
+             * Tempaltes are compiled into a single javascript file. The name of the script
+             * is also the name of the module you'll include in your application.
              */
             dest: 'assets/templates.js'
         }
     },
 
     /**
-     * THROW IN EXPLANATION HERE
+     * Static files are just what they sound like, files that do not need to change through
+     * the build process. These files, are a straight copy and paste from the source directory
+     * to the ouput directories.
      */
     static: {
 
         src: {
-            files: ['source/{favicon.ico,*.html,*.js,*.json}', 'source/**/{images,videos,fonts}/**/*'],
-            watch: ['source/{favicon.ico,*.html,*.js,*.json}', 'source/**/{images,videos,fonts}/**/*'],
+
+            // same as styles libs
+            files: [
+                'source/{favicon.ico,*.html,*.js,*.json}',
+                'source/**/{images,videos,fonts}/**/*'
+            ],
+
+            // same as styles libs
+            watch: [
+                'source/{favicon.ico,*.html,*.js,*.json}',
+                'source/**/{images,videos,fonts}/**/*'
+            ],
+
+            /**
+             * This is just saying to put the files relative to the root of the output directory.
+             */
             dest: './'
         }
 

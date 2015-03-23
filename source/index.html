@@ -11,8 +11,8 @@
 
 	<body ng-app="myApp">
 		
-		<div id="partial" class="container" ng-controller="PartialController">
-			<a href="#/"><h1 ng-bind="data"></h1></a>
+		<div id="partial" class="container" ng-controller="PartialController" ng-include="'/views/templates/partial.html'">
+
 		</div>
 
 		<div id="content">
@@ -20,6 +20,7 @@
 		</div>
 
 		<script src="assets/libs.js"></script>
+        <script src="assets/templates.js"></script>
 		<script src="assets/main.js"></script>
 
 	</body>
