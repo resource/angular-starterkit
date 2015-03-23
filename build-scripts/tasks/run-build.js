@@ -168,7 +168,11 @@ gulp.task('views-compile', function () {
     }
 
     return gulp.src(files)
-        .pipe(templateCache(name, {module: name.split('.')[0], standalone: true}))
+        .pipe(templateCache(name, {
+            root:"/views/templates/",
+            module: name.split('.')[0],
+            standalone: true
+        }))
         .pipe(uglify())
         .pipe(gulp.dest(RELEASE_DESTINATION + path));
 
