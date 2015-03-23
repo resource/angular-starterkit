@@ -30,14 +30,7 @@ var config = module.exports = {
 
         src: {
 
-            /**
-             * See description above from styles->libs.
-             */
             files: ['source/assets/styles/main.scss'],
-
-            /**
-             * See description above from styles->libs.
-             */
             watch: ['source/**/*.scss'],
 
             /**
@@ -50,20 +43,26 @@ var config = module.exports = {
     },
 
     /**
-     * THROW IN EXPLANATION HERE
+     * The scripts section is all of our source and library javascript files used in
+     * the application.
+     *
      */
     scripts: {
 
         libs: {
+
             files: ['source/libs/angular.js', 'source/libs/jquery.js', 'source/libs/*.js'],
             watch: ['source/libs/**/*.js'],
             dest: 'assets/libs.js'
+
         },
 
         src: {
+
             files: ['source/app/**/*.js'],
             watch: ['source/app/**/*.js','source/app/directives/**/*.html'],
             dest: 'assets/main.js'
+
         }
     },
 
@@ -76,17 +75,31 @@ var config = module.exports = {
          * THROW IN EXPLANATION HERE
          */
         copy: {
+
             files: ['source/app/views/**/*.html'],
             watch: ['source/app/views/**/*.html'],
+
+            /**
+             * Destination here is a directory without a file because we're just copying
+             * the views over to the output directory
+             */
             dest: 'views'
+
         },
 
         /**
          * THROW IN EXPLANATION HERE
          */
         compile: {
+
             files: ['source/app/views/**/*.html'],
             watch: [],
+
+            /**
+             * In the case of pre-compiling views into angulars templateCace templates is the name
+             * of the javascript file as well as the name of the module you'll need to import
+             * into your application.
+             */
             dest: 'assets/templates.js'
         }
     },

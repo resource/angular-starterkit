@@ -6,7 +6,8 @@ angular.module('myApp', [
     'ngRoute',
     'controllers',
     'filters',
-    'services'
+    'services',
+    'raCircleImage'
 ]);
 
 /**
@@ -15,7 +16,7 @@ angular.module('myApp', [
  * for each controller, filter or service your application
  * contains create within your application.
  */
-angular.module('controllers', ['circleImage']);
+angular.module('controllers',[]);
 angular.module('filters', []);
 angular.module('services', []);
 
