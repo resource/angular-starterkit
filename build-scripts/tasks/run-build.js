@@ -53,10 +53,17 @@ gulp.task('styles-libs', function () {
     var path = info.path || '';
 
     if (buildType === BUILDTYPE_DEBUG) {
-        return gulp.src(files).pipe(concat(name)).pipe(gulp.dest(DEBUG_DESTINATION + path));
+        return gulp.src(files)
+            .pipe(sourcemaps.init())
+            .pipe(concat(name))
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest(DEBUG_DESTINATION + path));
     }
 
-    return gulp.src(files).pipe(concat(name)).pipe(cssmin()).pipe(gulp.dest(RELEASE_DESTINATION + path));
+    return gulp.src(files)
+        .pipe(concat(name))
+        .pipe(cssmin())
+        .pipe(gulp.dest(RELEASE_DESTINATION + path));
 
 });
 
@@ -66,10 +73,14 @@ gulp.task('styles-src', function () {
     var files = configUtils.prefixFiles(styleSources.files, BASE_PATH);
 
     if (buildType === BUILDTYPE_DEBUG) {
-        return sass(files, {sourcemap: true}).pipe(sourcemaps.write()).pipe(gulp.dest(DEBUG_DESTINATION + styleSources.dest));
+        return sass(files, {sourcemap: true})
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest(DEBUG_DESTINATION + styleSources.dest));
     }
     
-    return sass(files, {sourcemap: true}).pipe(cssmin()).pipe(gulp.dest(RELEASE_DESTINATION + styleSources.dest));
+    return sass(files, {sourcemap: true})
+        .pipe(cssmin())
+        .pipe(gulp.dest(RELEASE_DESTINATION + styleSources.dest));
 
 });
 
@@ -88,10 +99,17 @@ gulp.task('scripts-libs', function () {
     var path = info.path || '';
     
     if (buildType === BUILDTYPE_DEBUG) {
-        return gulp.src(files).pipe(concat(name)).pipe(gulp.dest(DEBUG_DESTINATION + path));
+        return gulp.src(files)
+            .pipe(sourcemaps.init())
+            .pipe(concat(name))
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest(DEBUG_DESTINATION + path));
     }
     
-    return gulp.src(files).pipe(concat(name)).pipe(uglify()).pipe(gulp.dest(RELEASE_DESTINATION + path));
+    return gulp.src(files)
+        .pipe(concat(name))
+        .pipe(uglify())
+        .pipe(gulp.dest(RELEASE_DESTINATION + path));
     
 });
 
@@ -107,9 +125,19 @@ gulp.task('scripts-src', function () {
     var path = info.path || '';
 
     if (buildType === BUILDTYPE_DEBUG) {
-        gulp.src(files).pipe(compileDirectives()).pipe(concat(name)).pipe(gulp.dest(DEBUG_DESTINATION + path));
+        gulp.src(files)
+        .pipe(sourcemaps.init())
+        .pipe(compileDirectives())
+        .pipe(concat(name))
+        .pipe(sourcemaps.write())
+        .pipe(gulp.dest(DEBUG_DESTINATION + path));
     }
-    gulp.src(files).pipe(compileDirectives()).pipe(concat(name)).pipe(uglify()).pipe(gulp.dest(RELEASE_DESTINATION + path));
+
+    gulp.src(files)
+    .pipe(compileDirectives())
+    .pipe(concat(name))
+    .pipe(uglify())
+    .pipe(gulp.dest(RELEASE_DESTINATION + path));
 
 });
 
@@ -148,10 +176,12 @@ gulp.task('views-copy', function () {
     var files = configUtils.prefixFiles(viewsCopy.files, BASE_PATH);
 
     if (buildType === BUILDTYPE_DEBUG) {
-        return gulp.src(files).pipe(gulp.dest(DEBUG_DESTINATION + viewsCopy.dest));
+        return gulp.src(files)
+            .pipe(gulp.dest(DEBUG_DESTINATION + viewsCopy.dest));
     }
 
-    return gulp.src(files).pipe(gulp.dest(RELEASE_DESTINATION + viewsCopy.dest));
+    return gulp.src(files)
+        .pipe(gulp.dest(RELEASE_DESTINATION + viewsCopy.dest));
 
 });
 
@@ -164,10 +194,12 @@ gulp.task('static', function () {
     var files = configUtils.prefixFiles(staticSources.files, BASE_PATH);
 
     if (buildType === BUILDTYPE_DEBUG) {
-        return gulp.src(files).pipe(gulp.dest(DEBUG_DESTINATION + staticSources.dest));
+        return gulp.src(files)
+            .pipe(gulp.dest(DEBUG_DESTINATION + staticSources.dest));
     }
 
-    return gulp.src(files).pipe(gulp.dest(RELEASE_DESTINATION + staticSources.dest));
+    return gulp.src(files)
+        .pipe(gulp.dest(RELEASE_DESTINATION + staticSources.dest));
 
 });
 
