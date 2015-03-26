@@ -19,12 +19,12 @@ function compileDirectives() {
             if (file.path.search("/directives/") > -1) {
 
                 var script = file.contents.toString();
-                var moduleName = script.match(/angular\.module\('(.[^']+)/);
+                var moduleName = script.match(/angular\.module\s*\(\s*['"](.[^'"]+)/);
 
                 if (moduleName !== null) {
 
                     var name = moduleName[1];
-                    var htmlPath = script.match(/templateUrl:\s+'(.[^']+)'/);
+                    var htmlPath = script.match(/templateUrl\s*:\s*['"](.[^'"]+)['"]/);
 
                     if (htmlPath !== null) {
 
