@@ -45,6 +45,5 @@ release
 debug
 tests/temp.js
 
-# webstorm
-workspace.xml
-tasks.xml
+# IDE
+.idea
