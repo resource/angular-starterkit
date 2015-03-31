@@ -57,7 +57,6 @@ var config = module.exports = {
             // same as styles libs
             files: [
                 'source/libs/angular.js',
-                'source/libs/jquery.js',
                 'source/libs/*.js'
             ],
 
@@ -157,6 +156,14 @@ var config = module.exports = {
      * of the karma portion of the build configuration.
      */
     karma: {
+
+        /**
+         * Optional and should only contain library files that may have been loaded through cdns in your
+         * project. Store any of these library files within tests/libs. Only include the files array if order
+         * matters, otherwise omit the array as all library files within the tests/libs directory
+         * will be loaded (alphabetically).
+         */
+        // files:['jquery.js'],
         frameworks: ['jasmine'],
         exclude: [],
         preprocessors: {},

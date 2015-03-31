@@ -30,6 +30,12 @@ var viewsCompile = config.views.compile;
 
 var files = [];
 
+if(config.karma.files) {
+    files = configUtils.prefixFiles(config.karma.files,'../tests/libs/');
+} else {
+    files.push('../tests/libs/*.js');
+}
+
 if(!configUtils.sectionEmpty(scriptLibraries)) {
     var info = configUtils.filenameAndPathFromDest(scriptLibraries.dest);
     var path = info.path;
@@ -52,7 +58,7 @@ if(!configUtils.sectionEmpty(scriptSources)) {
 }
 
 karmaConfig.files = _.union(files,[
-    '../tests/libs/**/*.js',
+    './libs/angular-mocks.js',
     '../tests/specs/**/*.js'
 ]);
 

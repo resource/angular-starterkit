@@ -7,10 +7,12 @@
         <link rel="stylesheet" type="text/css" href="assets/libs.css">
         <link rel="stylesheet" type="text/css" href="assets/main.css">
 
+        <script src="//ajax.googleapis.com/ajax/libs/jquery/2.1.3/jquery<%= debug ? '':'.min' %>.js"></script>
+
 	</head>
 
 	<body ng-app="myApp">
-		
+
 		<div id="partial" class="container" ng-controller="PartialController" ng-include="'/views/templates/partial.html'">
 
 		</div>

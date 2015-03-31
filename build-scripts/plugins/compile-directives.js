@@ -21,40 +21,28 @@ function compileDirectives() {
                 var script = file.contents.toString();
                 var moduleName = script.match(/angular\.module\s*\(\s*['"](.[^'"]+)/);
 
-                if (moduleName !== null) {
+                var name = moduleName[1];
+                var htmlPath = script.match(/templateUrl\s*:\s*['"](.[^'"]+)['"]/);
 
-                    var name = moduleName[1];
-                    var htmlPath = script.match(/templateUrl\s*:\s*['"](.[^'"]+)['"]/);
+                if (htmlPath !== null) {
 
-                    if (htmlPath !== null) {
+                    htmlPath = htmlPath[1].replace(/\r|\n/, ' ');
 
-                        htmlPath = htmlPath[1].replace(/\r|\n/, ' ');
+                    var html;
 
-                        var html;
-
-                        try {
-                            html = fs.readFileSync(file.base + htmlPath, 'utf8');
-                        } catch (e) {
-                            this.emit('error', new PluginError(PLUGIN_NAME, 'HTML not found for the \'' + name + '\' directive.'));
-                        }
-
-                        var cacheStr = "angular.module('" + name + "').run(['$templateCache', function ($templateCache) { $templateCache.put('" + htmlPath + "', '" + jsStringEscape(html) + "');" + " }]);";
-                        var htmlBuffer = new Buffer(cacheStr, 'utf8');
-
-                        file.contents = Buffer.concat([file.contents, htmlBuffer]);
-
-
-                    } else {
-
-                        this.emit('error', new PluginError(PLUGIN_NAME, 'HTML path not specified for the ' + name + ' directive.'));
-
+                    try {
+                        html = fs.readFileSync(file.base + htmlPath, 'utf8');
+                    } catch (e) {
+                        this.emit('error', new PluginError(PLUGIN_NAME, 'HTML not found for the \'' + name + '\' directive.'));
                     }
 
-                } else {
+                    var cacheStr = "angular.module('" + name + "').run(['$templateCache', function ($templateCache) { $templateCache.put('" + htmlPath + "', '" + jsStringEscape(html) + "');" + " }]);";
+                    var htmlBuffer = new Buffer(cacheStr, 'utf8');
 
-                    this.emit('error', new PluginError(PLUGIN_NAME, 'Module not defined for directive.'));
+                    file.contents = Buffer.concat([file.contents, htmlBuffer]);
 
                 }
+
             }
         }
 

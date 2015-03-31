@@ -10,6 +10,7 @@ var templateCache = require('gulp-angular-templatecache');
 var _ = require('underscore');
 var configUtils = require('../utils/config-utils');
 var compileDirectives = require('../plugins/compile-directives');
+var ejs = require('../plugins/compile-ejs');
 var config = require('../../build-config.js');
 var cssmin = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
@@ -126,18 +127,18 @@ gulp.task('scripts-src', function () {
 
     if (buildType === BUILDTYPE_DEBUG) {
         gulp.src(files)
-        .pipe(sourcemaps.init())
-        .pipe(compileDirectives())
-        .pipe(concat(name))
-        .pipe(sourcemaps.write())
-        .pipe(gulp.dest(DEBUG_DESTINATION + path));
+            .pipe(sourcemaps.init())
+            .pipe(compileDirectives())
+            .pipe(concat(name))
+            .pipe(sourcemaps.write())
+            .pipe(gulp.dest(DEBUG_DESTINATION + path));
     }
 
     gulp.src(files)
-    .pipe(compileDirectives())
-    .pipe(concat(name))
-    .pipe(uglify())
-    .pipe(gulp.dest(RELEASE_DESTINATION + path));
+        .pipe(compileDirectives())
+        .pipe(concat(name))
+        .pipe(uglify())
+        .pipe(gulp.dest(RELEASE_DESTINATION + path));
 
 });
 
@@ -156,11 +157,10 @@ gulp.task('views-compile', function () {
     var name = info.filename || 'templates.js';
     var path = info.path || '';
 
-
     if (buildType === BUILDTYPE_DEBUG) {
         return gulp.src(files)
             .pipe(templateCache(name, {
-                root:"/views/templates/",
+                root: "/views/templates/",
                 module: name.split('.')[0],
                 standalone: true
             }))
@@ -169,7 +169,7 @@ gulp.task('views-compile', function () {
 
     return gulp.src(files)
         .pipe(templateCache(name, {
-            root:"/views/templates/",
+            root: "/views/templates/",
             module: name.split('.')[0],
             standalone: true
         }))
@@ -180,6 +180,7 @@ gulp.task('views-compile', function () {
 });
 
 gulp.task('views-copy', function () {
+
     if (configUtils.sectionEmpty(viewsCopy)) return;
     var files = configUtils.prefixFiles(viewsCopy.files, BASE_PATH);
 
@@ -198,15 +199,19 @@ gulp.task('views-copy', function () {
 // ============================================================
 
 gulp.task('static', function () {
+
     if (configUtils.sectionEmpty(staticSources)) return;
+
     var files = configUtils.prefixFiles(staticSources.files, BASE_PATH);
 
     if (buildType === BUILDTYPE_DEBUG) {
         return gulp.src(files)
+            .pipe(ejs({ debug:buildType === 'debug' }))
             .pipe(gulp.dest(DEBUG_DESTINATION + staticSources.dest));
     }
 
     return gulp.src(files)
+        .pipe(ejs({ debug:buildType === 'debug' }))
         .pipe(gulp.dest(RELEASE_DESTINATION + staticSources.dest));
 
 });
