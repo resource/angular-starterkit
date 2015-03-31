@@ -140,7 +140,7 @@ var config = module.exports = {
             // same as styles libs
             watch: [
                 'source/{favicon.ico,*.html,*.js,*.json}',
-                'source/**/{images,videos,fonts}/**/*'
+                'source/**/{images, videos, fonts}/**/*'
             ],
 
             /**

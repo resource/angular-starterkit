@@ -1,41 +1,33 @@
 {
-    
-    "bitwise"       : true,
-    "curly"         : true,
-    "eqeqeq"        : true,
-    "immed"         : true,
-    "newcap"        : true,
-    "nonew"         : true,
-    "undef"         : true,
-    "strict"        : false,
-    "trailing"      : true,
-    "quotmark"      : false,
-
-    "debug"         : true,
-
-    "browser"       : true,
-    "jquery"        : true,
-    "node"          : true,
-
-    "predef"        : [
-        
-        "angular",
-        
-        "jasmine",
-        "describe",
-        "xdescribe",
-        "before",
-        "beforeEach",
-        "after",
-        "afterEach",
-        "it",
-        "xit",
-        "it",
-        "inject",
-        "expect",
-        "spyOn",
-        "_",
-        "require"
-        
-    ]
+  "bitwise": true,
+  "curly": true,
+  "eqeqeq": true,
+  "immed": true,
+  "newcap": true,
+  "nonew": true,
+  "undef": true,
+  "strict": false,
+  "trailing": true,
+  "quotmark": false,
+  "debug": true,
+  "browser": true,
+  "jquery": true,
+  "node": true,
+  "globals": {
+    "angular": false,
+    "describe": false,
+    "xdescribe": false,
+    "jasmine": false,
+    "before": false,
+    "beforeEach": false,
+    "after": false,
+    "afterEach": false,
+    "it": false,
+    "xit": false,
+    "inject": false,
+    "expect": false,
+    "spyOn": false,
+    "_": false,
+    "require": false
+  }
 }

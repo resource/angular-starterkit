@@ -37,3 +37,10 @@ There is no baked in support for browser synchronization in this starterkit. For
 1. [Ghostlab](http://vanamco.com/ghostlab/)
 2. [BrowserSync](http://www.browsersync.io/)
 3. [LiveReload](http://livereload.com/)
+
+## Using With JetBrains Webstorm
+
+To use jshint correctly you will need to turn off webstorms checking.
+
+* unresolved javascript functions
+* unresolved javascript variables
