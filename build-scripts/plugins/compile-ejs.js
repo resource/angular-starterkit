@@ -1,7 +1,5 @@
 var through = require('through2');
-var fs = require('fs');
 var gutil = require('gulp-util');
-var PluginError = gutil.PluginError;
 var ejs = require('ejs');
 var _ = require('underscore');
 

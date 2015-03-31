@@ -15,6 +15,7 @@ var config = require('../../build-config.js');
 var cssmin = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var argv = require('yargs').argv;
+var gulpif = require('gulp-if');
 
 // ============================================================
 // === Constants ==============================================
@@ -38,6 +39,8 @@ var viewsCompile = config.views.compile;
 var staticSources = config.static.src;
 
 var buildType = argv.buildtype || BUILDTYPE_DEBUG;
+var isDebug = buildType === BUILDTYPE_DEBUG;
+var outputDir = isDebug ? DEBUG_DESTINATION : RELEASE_DESTINATION;
 
 // ============================================================
 // === CSS Tasks ==============================================
@@ -53,35 +56,25 @@ gulp.task('styles-libs', function () {
     var name = info.filename || 'libs.css';
     var path = info.path || '';
 
-    if (buildType === BUILDTYPE_DEBUG) {
-        return gulp.src(files)
-            .pipe(sourcemaps.init())
-            .pipe(concat(name))
-            .pipe(sourcemaps.write())
-            .pipe(gulp.dest(DEBUG_DESTINATION + path));
-    }
-
     return gulp.src(files)
+        .pipe(gulpif(isDebug, sourcemaps.init()))
         .pipe(concat(name))
-        .pipe(cssmin())
-        .pipe(gulp.dest(RELEASE_DESTINATION + path));
+        .pipe(gulpif(isDebug, sourcemaps.write()))
+        .pipe(gulpif(!isDebug, cssmin()))
+        .pipe(gulp.dest(outputDir + path));
 
 });
 
 gulp.task('styles-src', function () {
 
     if (configUtils.sectionEmpty(styleSources)) return;
+
     var files = configUtils.prefixFiles(styleSources.files, BASE_PATH);
 
-    if (buildType === BUILDTYPE_DEBUG) {
-        return sass(files, {sourcemap: true})
-            .pipe(sourcemaps.write())
-            .pipe(gulp.dest(DEBUG_DESTINATION + styleSources.dest));
-    }
-    
-    return sass(files, {sourcemap: true})
-        .pipe(cssmin())
-        .pipe(gulp.dest(RELEASE_DESTINATION + styleSources.dest));
+    return sass(files, {sourcemap: isDebug})
+        .pipe(gulpif(isDebug, sourcemaps.write()))
+        .pipe(gulpif(!isDebug, cssmin()))
+        .pipe(gulp.dest(outputDir + styleSources.dest));
 
 });
 
@@ -99,18 +92,12 @@ gulp.task('scripts-libs', function () {
     var name = info.filename || 'libs.js';
     var path = info.path || '';
     
-    if (buildType === BUILDTYPE_DEBUG) {
-        return gulp.src(files)
-            .pipe(sourcemaps.init())
-            .pipe(concat(name))
-            .pipe(sourcemaps.write())
-            .pipe(gulp.dest(DEBUG_DESTINATION + path));
-    }
-    
     return gulp.src(files)
+        .pipe(gulpif(isDebug,sourcemaps.init()))
         .pipe(concat(name))
-        .pipe(uglify())
-        .pipe(gulp.dest(RELEASE_DESTINATION + path));
+        .pipe(gulpif(isDebug,sourcemaps.write()))
+        .pipe(gulpif(!isDebug,uglify()))
+        .pipe(gulp.dest(outputDir + path));
     
 });
 
@@ -118,27 +105,19 @@ gulp.task('scripts-src', function () {
 
     if (configUtils.sectionEmpty(scriptSources)) return;
 
-
     var files = configUtils.prefixFiles(scriptSources.files, BASE_PATH);
 
     var info = configUtils.filenameAndPathFromDest(scriptSources.dest);
     var name = info.filename || 'main.js';
     var path = info.path || '';
 
-    if (buildType === BUILDTYPE_DEBUG) {
-        gulp.src(files)
-            .pipe(sourcemaps.init())
-            .pipe(compileDirectives())
-            .pipe(concat(name))
-            .pipe(sourcemaps.write())
-            .pipe(gulp.dest(DEBUG_DESTINATION + path));
-    }
-
     gulp.src(files)
+        .pipe(gulpif(isDebug,sourcemaps.init()))
         .pipe(compileDirectives())
         .pipe(concat(name))
-        .pipe(uglify())
-        .pipe(gulp.dest(RELEASE_DESTINATION + path));
+        .pipe(gulpif(isDebug,sourcemaps.write()))
+        .pipe(gulpif(!isDebug,uglify()))
+        .pipe(gulp.dest(outputDir + path));
 
 });
 
@@ -157,40 +136,25 @@ gulp.task('views-compile', function () {
     var name = info.filename || 'templates.js';
     var path = info.path || '';
 
-    if (buildType === BUILDTYPE_DEBUG) {
-        return gulp.src(files)
-            .pipe(templateCache(name, {
-                root: "/views/templates/",
-                module: name.split('.')[0],
-                standalone: true
-            }))
-            .pipe(gulp.dest(DEBUG_DESTINATION + path));
-    }
-
     return gulp.src(files)
         .pipe(templateCache(name, {
             root: "/views/templates/",
             module: name.split('.')[0],
             standalone: true
         }))
-        .pipe(uglify())
-        .pipe(gulp.dest(RELEASE_DESTINATION + path));
-
+        .pipe(gulpif(!isDebug,uglify()))
+        .pipe(gulp.dest(outputDir + path));
 
 });
 
 gulp.task('views-copy', function () {
 
     if (configUtils.sectionEmpty(viewsCopy)) return;
+
     var files = configUtils.prefixFiles(viewsCopy.files, BASE_PATH);
 
-    if (buildType === BUILDTYPE_DEBUG) {
-        return gulp.src(files)
-            .pipe(gulp.dest(DEBUG_DESTINATION + viewsCopy.dest));
-    }
-
     return gulp.src(files)
-        .pipe(gulp.dest(RELEASE_DESTINATION + viewsCopy.dest));
+        .pipe(gulp.dest(outputDir + viewsCopy.dest));
 
 });
 
@@ -204,15 +168,9 @@ gulp.task('static', function () {
 
     var files = configUtils.prefixFiles(staticSources.files, BASE_PATH);
 
-    if (buildType === BUILDTYPE_DEBUG) {
-        return gulp.src(files)
-            .pipe(ejs({ debug:buildType === 'debug' }))
-            .pipe(gulp.dest(DEBUG_DESTINATION + staticSources.dest));
-    }
-
     return gulp.src(files)
-        .pipe(ejs({ debug:buildType === 'debug' }))
-        .pipe(gulp.dest(RELEASE_DESTINATION + staticSources.dest));
+        .pipe(ejs({debug: isDebug}))
+        .pipe(gulp.dest(outputDir + staticSources.dest));
 
 });
 

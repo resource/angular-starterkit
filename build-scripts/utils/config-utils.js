@@ -9,14 +9,6 @@ module.exports = {
         return false;
     },
 
-    shouldWatchSection: function (section) {
-        if (!section || !section.watch || section.watch.length == 0) {
-            return true;
-        }
-        return true;
-    },
-
-
     filenameAndPathFromDest: function (dest) {
         if (!dest || dest == '') {
             return {};
@@ -30,7 +22,6 @@ module.exports = {
         };
 
     },
-
 
     prefixFiles: function (files, prefix) {
         var prefixedFiles = [];
@@ -49,6 +40,13 @@ module.exports = {
 
         });
         return prefixedFiles;
+    },
+
+    shouldWatchSection: function (section) {
+        if (!section || !section.watch || section.watch.length == 0) {
+            return true;
+        }
+        return true;
     },
 
     watchFilesForSection:function(section) {
