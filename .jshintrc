@@ -13,6 +13,7 @@
   "browser": true,
   "jquery": true,
   "node": true,
+  "esnext":true,
   "globals": {
     "angular": false,
     "describe": false,

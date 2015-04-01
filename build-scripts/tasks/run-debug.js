@@ -8,6 +8,7 @@ var _ = require('underscore');
 var configUtils = require('../utils/config-utils');
 var config = require('../../build-config.js');
 var nodemon = require('gulp-nodemon');
+var open = require('gulp-open');
 
 // ============================================================
 // === Constants ==============================================
@@ -25,7 +26,6 @@ var styleLibraries = config.styles.libs;
 var styleSources = config.styles.src;
 var viewsCopy = config.views.copy;
 var viewsCompile = config.views.compile;
-var staticSources = config.static.src;
 
 // ============================================================
 // === Launch =================================================
@@ -46,55 +46,65 @@ gulp.task('launch', function () {
 gulp.task('watch', function () {
 
     if (configUtils.shouldWatchSection(styleLibraries)) {
-        var files = configUtils.watchFilesForSection(styleLibraries);
-        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
+        var styleLibFiles = configUtils.watchFilesForSection(styleLibraries);
+        watch(configUtils.prefixFiles(styleLibFiles, BASE_PATH), function () {
             gulp.start('styles-src');
         });
     }
 
     if (configUtils.shouldWatchSection(styleSources)) {
-        var files = configUtils.watchFilesForSection(styleSources);
-        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
+        var styleSourceFiles = configUtils.watchFilesForSection(styleSources);
+        watch(configUtils.prefixFiles(styleSourceFiles, BASE_PATH), function () {
             gulp.start('styles-src');
         });
     }
 
     if (configUtils.shouldWatchSection(scriptSources)) {
-        var files = configUtils.watchFilesForSection(scriptSources);
-        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
+        var scriptSourceFiles = configUtils.watchFilesForSection(scriptSources);
+        watch(configUtils.prefixFiles(scriptSourceFiles, BASE_PATH), function () {
             gulp.start(['scripts-src', 'views-compile']);
         });
     }
 
     if (configUtils.shouldWatchSection(scriptLibraries)) {
-        var files = configUtils.watchFilesForSection(scriptLibraries);
-        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
+        var scriptLibFiles = configUtils.watchFilesForSection(scriptLibraries);
+        watch(configUtils.prefixFiles(scriptLibFiles, BASE_PATH), function () {
             gulp.start('scripts-libs');
         });
     }
 
     if (configUtils.shouldWatchSection(viewsCopy)) {
-        var files = configUtils.watchFilesForSection(viewsCopy);
-        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
+        var viewsCopySource = configUtils.watchFilesForSection(viewsCopy);
+        watch(configUtils.prefixFiles(viewsCopySource, BASE_PATH), function () {
             gulp.start('views-copy');
         });
     }
 
     if (configUtils.shouldWatchSection(viewsCompile)) {
-        var files = configUtils.watchFilesForSection(viewsCompile);
-        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
+        var viewsCompileSource = configUtils.watchFilesForSection(viewsCompile);
+        watch(configUtils.prefixFiles(viewsCompileSource, BASE_PATH), function () {
             gulp.start('views-compile');
         });
     }
 
-    if (configUtils.shouldWatchSection(staticSources)) {
-        var files = configUtils.watchFilesForSection(staticSources);
-        watch(configUtils.prefixFiles(files, BASE_PATH), function () {
-            gulp.start('static');
-        });
-    }
+    var assetFiles = [BASE_PATH + '/source/**/assets/**/*.*',BASE_PATH + '/source/*.*'];
 
+    watch(assetFiles, function () {
+        gulp.start('static');
+    });
 
+});
+
+// ============================================================
+// === Open Browser ===========================================
+// ============================================================
+
+gulp.task('openurl', function () {
+    var options = {
+        url: 'http://localhost:3000/'
+    };
+    gulp.src('../debug/index.html')
+        .pipe(open('', options));
 });
 
 // ============================================================
@@ -102,5 +112,5 @@ gulp.task('watch', function () {
 // ============================================================
 
 gulp.task('run-debug', ['run-build'], function () {
-    gulp.start('launch', 'watch');
+    gulp.start('launch', 'watch', 'openurl');
 });

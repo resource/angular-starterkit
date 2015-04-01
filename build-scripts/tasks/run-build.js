@@ -16,6 +16,7 @@ var cssmin = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var argv = require('yargs').argv;
 var gulpif = require('gulp-if');
+var print = require('gulp-print');
 
 // ============================================================
 // === Constants ==============================================
@@ -36,7 +37,6 @@ var styleLibraries = config.styles.libs;
 var styleSources = config.styles.src;
 var viewsCopy = config.views.copy;
 var viewsCompile = config.views.compile;
-var staticSources = config.static.src;
 
 var buildType = argv.buildtype || BUILDTYPE_DEBUG;
 var isDebug = buildType === BUILDTYPE_DEBUG;
@@ -164,13 +164,11 @@ gulp.task('views-copy', function () {
 
 gulp.task('static', function () {
 
-    if (configUtils.sectionEmpty(staticSources)) return;
-
-    var files = configUtils.prefixFiles(staticSources.files, BASE_PATH);
+    var files = [BASE_PATH + '/source/**/assets/**/*.*',BASE_PATH + '/source/*.*'];
 
     return gulp.src(files)
         .pipe(ejs({debug: isDebug}))
-        .pipe(gulp.dest(outputDir + staticSources.dest));
+        .pipe(gulp.dest(outputDir));
 
 });
 

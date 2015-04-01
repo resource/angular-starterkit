@@ -31,7 +31,7 @@ var config = module.exports = {
         src: {
 
             // same as styles libs
-            files: ['source/assets/styles/main.scss'],
+            files: ['source/styles/main.scss'],
 
             // same as styles libs
             watch: ['source/**/*.scss'],
@@ -123,33 +123,9 @@ var config = module.exports = {
     },
 
     /**
-     * Static files are just what they sound like, files that do not need to change through
-     * the build process. These files, are a straight copy and paste from the source directory
-     * to the ouput directories.
+     * Static files should be included in the assets directory. Be careful not to name static files
+     * the same as your derived as they will be overwritten.
      */
-    static: {
-
-        src: {
-
-            // same as styles libs
-            files: [
-                'source/{favicon.ico,*.html,*.js,*.json}',
-                'source/**/{images,videos,fonts}/**/*'
-            ],
-
-            // same as styles libs
-            watch: [
-                'source/{favicon.ico,*.html,*.js,*.json}',
-                'source/**/{images, videos, fonts}/**/*'
-            ],
-
-            /**
-             * This is just saying to put the files relative to the root of the output directory.
-             */
-            dest: './'
-        }
-
-    },
 
     /**
      * See http://karma-runner.github.io/0.8/config/configuration-file.html for detailed explanations

@@ -30,36 +30,41 @@ var viewsCompile = config.views.compile;
 
 var files = [];
 
-if(config.karma.files) {
-    files = configUtils.prefixFiles(config.karma.files,'../tests/libs/');
+if (config.karma.files) {
+    files = configUtils.prefixFiles(config.karma.files, '../tests/libs/');
 } else {
     files.push('../tests/libs/*.js');
 }
 
-if(!configUtils.sectionEmpty(scriptLibraries)) {
+if (!configUtils.sectionEmpty(scriptLibraries)) {
     var info = configUtils.filenameAndPathFromDest(scriptLibraries.dest);
     var path = info.path;
     var name = info.filename || 'libs.js';
     files.push(BASE_PATH + path + '/' + name);
 }
 
-if(!configUtils.sectionEmpty(viewsCompile)) {
+if (!configUtils.sectionEmpty(viewsCompile)) {
     var info = configUtils.filenameAndPathFromDest(viewsCompile.dest);
     var path = info.path;
     var name = info.filename || 'templates.js';
     files.push(BASE_PATH + path + '/' + name);
 }
 
-if(!configUtils.sectionEmpty(scriptSources)) {
+if (!configUtils.sectionEmpty(scriptSources)) {
     var info = configUtils.filenameAndPathFromDest(scriptSources.dest);
     var path = info.path;
     var name = info.filename || 'main.js';
     files.push(BASE_PATH + path + '/' + name);
 }
 
-karmaConfig.files = _.union(files,[
+karmaConfig.files = _.union(files, [
     './libs/angular-mocks.js',
-    '../tests/specs/**/*.js'
+    '../tests/specs/**/*.js', {
+        pattern: BASE_PATH + '/assets/**/*',
+        included: false,
+        served: true,
+        watched:false
+    }
 ]);
 
 gulp.task('karma-start', function (done) {

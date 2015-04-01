@@ -2,23 +2,27 @@
  * A simple example service that create a factory (UsersService)
  * off of the services module.
  */
-angular.module('services').factory('UserService', function () {
-
-    var names = [
-        'Steve Zissou',
-        'Ned Plimpton',
-        'Jane Winslett-Richardson',
-        'Klaus Daimler',
-        'Alistair Hennessey'
-    ];
+angular.module('services').factory('UserService', ['$http', '$q', function ($http, $q) {
 
     return {
+
         all: function () {
-            return names;
-        },
-        first: function () {
-            return names[0];
+
+            var deferred = $q.defer();
+
+            $http.get('/assets/data/users.json').success(function (data) {
+
+                deferred.resolve(data);
+
+            }).error(function () {
+
+                deferred.reject("not found");
+
+            });
+
+            return deferred.promise;
         }
+
     };
 
-});
+}]);
