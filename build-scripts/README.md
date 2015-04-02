@@ -1,0 +1,1 @@
+Try to keep from editing files within the build scripts file. Or submit a pull request with a worthy addition. All of the functionality used with the gulp tasks is pulled from the build-config.js file in the root of this repository.
