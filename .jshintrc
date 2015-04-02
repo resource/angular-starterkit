@@ -29,6 +29,7 @@
     "expect": false,
     "spyOn": false,
     "_": false,
-    "require": false
+    "require": false,
+    "browser": false
   }
 }

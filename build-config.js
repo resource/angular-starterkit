@@ -151,4 +151,5 @@ var config = module.exports = {
         browsers: ['PhantomJS'],
         singleRun: true
     }
+
 };

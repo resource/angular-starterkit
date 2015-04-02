@@ -59,7 +59,7 @@ if (!configUtils.sectionEmpty(scriptSources)) {
 
 karmaConfig.files = _.union(files, [
     './libs/angular-mocks.js',
-    '../tests/specs/**/*.js', {
+    '../tests/unit/**/*.js', {
         pattern: BASE_PATH + '/assets/**/*',
         included: false,
         served: true,
@@ -75,6 +75,6 @@ gulp.task('karma-start', function (done) {
 // === Macro Task =============================================
 // ============================================================
 
-gulp.task('run-tests', ['run-build'], function () {
+gulp.task('run-unit-tests', ['run-build'], function () {
     gulp.start('karma-start');
 });

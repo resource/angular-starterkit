@@ -100,11 +100,13 @@ gulp.task('watch', function () {
 // ============================================================
 
 gulp.task('openurl', function () {
+    /*
     var options = {
         url: 'http://localhost:3000/'
     };
     gulp.src('../debug/index.html')
         .pipe(open('', options));
+    */
 });
 
 // ============================================================

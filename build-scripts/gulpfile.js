@@ -2,10 +2,14 @@
 
 require('./tasks/run-build');
 
-// run-tests
-
-require('./tasks/run-tests');
-
 // run-debug
 
 require('./tasks/run-debug');
+
+// run-unit-tests
+
+require('./tasks/run-unit-tests');
+
+// run-e2e-tests
+
+require('./tasks/run-e2e-tests');
