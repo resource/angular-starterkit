@@ -16,21 +16,21 @@
 
 ## Automation Tasks
 
-Available tasks include:
+**Available tasks include:**
 
-+ `npm run debug`
+`npm run debug`
 
 Builds the debug version of the project and starts up a node express server on port 3000.
 
-+ `npm run unit`
+`npm run unit`
 
 Runs the unit tests after build the debug version of the app.
 
-+ `npm run e2e`
+`npm run e2e`
 
 Runs the e2e tests after starting the debug server.
 
-+ `npm run release`
+`npm run release`
 
 Builds a release version of the application (cssmin, uglify, etc.).
 
