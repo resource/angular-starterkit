@@ -150,6 +150,23 @@ var config = module.exports = {
         autoWatch: false,
         browsers: ['PhantomJS'],
         singleRun: true
+    },
+
+    /**
+     * See https://github.com/angular/protractor/blob/master/docs/referenceConf.js for details.
+     */
+    protractor: {
+        capabilities: {
+            browserName: 'chrome' // defaults to chrome
+        },
+        params: {},
+        jasmineNodeOpts: {
+            isVerbose: true,
+            showColors: true,
+            includeStackTrace: true,
+            defaultTimeoutInterval: 30000
+        }
+
     }
 
 };

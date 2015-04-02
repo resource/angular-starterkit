@@ -44,6 +44,7 @@ node_modules
 release
 debug
 tests/temp.js
+protractor.conf.js
 
 # IDE
 .idea

@@ -8,7 +8,7 @@ var _ = require('underscore');
 var configUtils = require('../utils/config-utils');
 var config = require('../../build-config.js');
 var nodemon = require('gulp-nodemon');
-var open = require('gulp-open');
+var argv = require('yargs').argv;
 
 // ============================================================
 // === Constants ==============================================
@@ -32,11 +32,15 @@ var viewsCompile = config.views.compile;
 // ============================================================
 
 gulp.task('launch', function () {
-    nodemon({
+
+    var options = {
         script: '../debug/server.js',
         ext: 'ejs js',
-        ignore: ['**/*']
-    });
+        ignore: ['**/*'],
+        stdout: false
+    };
+
+    nodemon(options);
 });
 
 // ============================================================
@@ -87,7 +91,7 @@ gulp.task('watch', function () {
         });
     }
 
-    var assetFiles = [BASE_PATH + '/source/**/assets/**/*.*',BASE_PATH + '/source/*.*'];
+    var assetFiles = [BASE_PATH + '/source/**/assets/**/*.*', BASE_PATH + '/source/*.*'];
 
     watch(assetFiles, function () {
         gulp.start('static');
@@ -96,23 +100,9 @@ gulp.task('watch', function () {
 });
 
 // ============================================================
-// === Open Browser ===========================================
-// ============================================================
-
-gulp.task('openurl', function () {
-    /*
-    var options = {
-        url: 'http://localhost:3000/'
-    };
-    gulp.src('../debug/index.html')
-        .pipe(open('', options));
-    */
-});
-
-// ============================================================
 // === Macro Task =============================================
 // ============================================================
 
 gulp.task('run-debug', ['run-build'], function () {
-    gulp.start('launch', 'watch', 'openurl');
+    gulp.start('launch', 'watch');
 });
