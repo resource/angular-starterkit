@@ -1,5 +1,7 @@
 # Angular Starterkit
 
+An Angular starter-kit that uses karma, protractor, a clean folder structure, and Gulp integration with robust build config file.
+
 ## Requirements
 
 + [Node](http://nodejs.org/) version >=0.10.x
