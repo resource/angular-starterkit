@@ -8,7 +8,7 @@ const PLUGIN_NAME = 'compile-ejs';
 function compileDirectives(data) {
 
     data = data || {};
-    data.ext  = data.ext || '.html';
+    data.ext = data.ext || '.html';
 
     return through.obj(function (file, enc, cb) {
 
