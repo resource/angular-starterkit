@@ -37,7 +37,7 @@ gulp.task('launch', function () {
         script: '../debug/server.js',
         ext: 'ejs js',
         ignore: ['**/*'],
-        stdout: false
+        stdout: true
     };
 
     nodemon(options);
