@@ -128,31 +128,6 @@ var config = module.exports = {
      */
 
     /**
-     * See http://karma-runner.github.io/0.8/config/configuration-file.html for detailed explanations
-     * of the karma portion of the build configuration.
-     */
-    karma: {
-
-        /**
-         * Optional and should only contain library files that may have been loaded through cdns in your
-         * project. Store any of these library files within tests/libs. Only include the files array if order
-         * matters, otherwise omit the array as all library files within the tests/libs directory
-         * will be loaded (alphabetically).
-         */
-        // files:['jquery.js'],
-        frameworks: ['jasmine'],
-        exclude: [],
-        preprocessors: {},
-        reporters: ['mocha'],
-        port: 9876,
-        colors: true,
-        logLevel: 'ERROR',
-        autoWatch: false,
-        browsers: ['PhantomJS'],
-        singleRun: true
-    },
-
-    /**
      * See https://github.com/angular/protractor/blob/master/docs/referenceConf.js for details.
      */
     protractor: {
