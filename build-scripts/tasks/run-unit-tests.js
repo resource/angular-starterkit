@@ -4,7 +4,8 @@
 
 var gulp = require('gulp');
 var karma = require('karma').server;
-var karmaConfig = {};
+var KarmaConfig = require('../../node_modules/karma/lib/config').Config;
+var karmaConfig = new KarmaConfig();
 require('../../tests/karma.conf.js')(karmaConfig);
 
 gulp.task('karma-start', function (done) {
