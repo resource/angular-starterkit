@@ -1,55 +1,50 @@
-# Angular Starterkit
+# AngularJS Starter Kit
 
-An Angular starter-kit that uses karma, protractor, a clean folder structure, and Gulp integration with robust build config file.
+An easy to use AngularJS project template offering turn-key support for automated builds and testing as well as a clean, well-organized folder structure.
 
-### Requirements
+## Getting Started
 
-+ [Node](http://nodejs.org/) version >=0.10.x
-+ [NPM](https://www.npmjs.com/) >2.5
-+ [Sass](http://sass-lang.com/) >3.4
+Before proceding, make sure you have the [prerequisite software](#requirements) installed.
 
-### Installation
+1. Download the ZIP file for this project.
+1. Extract the ZIP file and rename the folder to your desired project name.
+1. Run `npm install` from within the root of the project folder.
 
-1. Clone starterkit repository.
-2. Copy it's contents to a new local directory or switch the repositories origin to your repository endpoint.
-3. Commit to your repository.
-2. Run `npm install` within the root of your local repository.
-3. Run one of the gulp tasks depending on the need.
+## Usage
 
-### Automation Tasks
+This starter kit provides a number of **npm** scripts to make your development workflow effortless. Available tasks include:
 
-**Available tasks include:**
+**`npm run debug`** ~ Builds a debug version of the project and makes it available at [http://localhost:3000](http://localhost:3000).
 
-**`npm run debug`**
+**`npm run unit`** ~ Runs the project's unit tests.
 
-> Builds the debug version of the project and starts up a node express server on port 3000.
+**`npm run e2e`** ~ Runs the project's end-to-end tests.
 
-**`npm run unit`**
+**`npm run release`** ~ Builds a release version of the application with minified, concatenated code.
 
-> Runs the unit tests after build the debug version of the app.
+You can modify the behavior of the above scripts by editing either of the following configuration files:
 
-**`npm run e2e`**
+- build-config.js
+- tests/karma.conf.js
 
-> Runs the e2e tests after starting the debug server.
+## Additional Info
 
-**`npm run release`**
+### WebStorm IDE Support
 
-> Builds a release version of the application (cssmin, uglify, etc.).
+For a more pleasant programming experience see the [WebStorm Setup Guide](docs/Webstorm%20Setup%20Guide.md) to learn how to use this project with JetBrains' excellent WebStorm IDE.
 
+### Browser Synchronization Support
 
-### Browser Synchronization
-
-There is no baked in support for browser synchronization in this starterkit. For browser synchronization (e.g. live reload) during project development you have your choice of tools to use. We kept the starterkit agnostic in this respect to keep the gulp file as simple as possible. There are a number of choices that you have though:
+There is no baked in support for browser synchronization (i.e. live reload) in this starter kit. If you'd like to add browser synchronization to your project we suggest one of the following solutions.
 
 1. [Ghostlab](http://vanamco.com/ghostlab/)
 2. [BrowserSync](http://www.browsersync.io/)
 3. [LiveReload](http://livereload.com/)
 
-### Using With JetBrains Webstorm
+## Requirements
 
-To use *jshint* correctly you will need to turn off some of webstorms default javascript validation.
+The following sofware is required when using this project.
 
-+ *unresolved javascript functions*
-+ *unresolved javascript variables*
-
-You can also use the build configuration utilities within Webstorm. Just run the command `npm run` to see how the tasks are run and what node environment variables are passed.
++ [Node](http://nodejs.org/) version >=0.10.x
++ [NPM](https://www.npmjs.com/) >2.5
++ [Sass](http://sass-lang.com/) >3.4
