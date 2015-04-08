@@ -7,7 +7,7 @@ An easy to use AngularJS project template offering turn-key support for automate
 Before proceding, make sure you have the [prerequisite software](#requirements) installed.
 
 1. Download the ZIP file for this project.
-1. Extract the ZIP file and rename the folder to your desired project name.
+1. Extract the ZIP file and rename the folder to whatever you'd like.
 1. Run `npm install` from within the root of the project folder.
 
 ## Usage
@@ -29,13 +29,11 @@ You can modify the behavior of the above scripts by editing either of the follow
 
 ## Additional Info
 
-### WebStorm IDE Support
+For a full description of the directories and files included in this project and how to use them, see [Directory Structure Overview](docs/Directory_Structure_Overview.md).
 
-For a more pleasant programming experience see the [WebStorm Setup Guide](docs/Webstorm%20Setup%20Guide.md) to learn how to use this project with JetBrains' excellent WebStorm IDE.
+For information on how to set up this project to work with JetBrains' excellent WebStorm IDE, see [WebStorm Setup Guide](docs/Webstorm_Setup_Guide.md).
 
-### Browser Synchronization Support
-
-There is no baked in support for browser synchronization (i.e. live reload) in this starter kit. If you'd like to add browser synchronization to your project we suggest one of the following solutions.
+Note, this starter kit has no baked-in support for browser synchronization (i.e. live reload). If you'd like to add browser synchronization to your project we suggest one of the following solutions.
 
 1. [Ghostlab](http://vanamco.com/ghostlab/)
 2. [BrowserSync](http://www.browsersync.io/)
