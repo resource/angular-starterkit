@@ -3,7 +3,7 @@
 // ============================================================
 
 var gulp = require('gulp');
-var sass = require('gulp-ruby-sass');
+var sass = require('gulp-sass');
 var concat = require('gulp-concat');
 var sourcemaps = require('gulp-sourcemaps');
 var templateCache = require('gulp-angular-templatecache');
@@ -12,11 +12,12 @@ var configUtils = require('../utils/config-utils');
 var compileDirectives = require('../plugins/compile-directives');
 var ejs = require('../plugins/compile-ejs');
 var config = require('../../build-config.js');
+var packageJSON = require('../../package.json');
 var cssmin = require('gulp-minify-css');
 var uglify = require('gulp-uglify');
 var argv = require('yargs').argv;
 var gulpif = require('gulp-if');
-var print = require('gulp-print');
+var rename = require("gulp-rename");
 
 // ============================================================
 // === Constants ==============================================
@@ -48,7 +49,9 @@ var outputDir = isDebug ? DEBUG_DESTINATION : RELEASE_DESTINATION;
 
 gulp.task('styles-libs', function () {
 
-    if (configUtils.sectionEmpty(styleLibraries)) return;
+    if (configUtils.sectionEmpty(styleLibraries)) {
+        return;
+    }
 
     var files = configUtils.prefixFiles(styleLibraries.files, BASE_PATH);
 
@@ -67,13 +70,16 @@ gulp.task('styles-libs', function () {
 
 gulp.task('styles-src', function () {
 
-    if (configUtils.sectionEmpty(styleSources)) return;
+    if (configUtils.sectionEmpty(styleSources)) {
+        return;
+    }
 
     var files = configUtils.prefixFiles(styleSources.files, BASE_PATH);
 
-    return sass(files, {sourcemap: isDebug})
+    gulp.src(files)
+        .pipe(sourcemaps.init())
+        .pipe(sass({sourcemap: isDebug}))
         .pipe(gulpif(isDebug, sourcemaps.write()))
-        .pipe(gulpif(!isDebug, cssmin()))
         .pipe(gulp.dest(outputDir + styleSources.dest));
 
 });
@@ -84,7 +90,9 @@ gulp.task('styles-src', function () {
 
 gulp.task('scripts-libs', function () {
     
-    if (configUtils.sectionEmpty(scriptLibraries)) return;
+    if (configUtils.sectionEmpty(scriptLibraries)) {
+        return;
+    }
 
     var files = configUtils.prefixFiles(scriptLibraries.files, BASE_PATH);
 
@@ -93,17 +101,19 @@ gulp.task('scripts-libs', function () {
     var path = info.path || '';
     
     return gulp.src(files)
-        .pipe(gulpif(isDebug,sourcemaps.init()))
+        .pipe(gulpif(isDebug, sourcemaps.init()))
         .pipe(concat(name))
-        .pipe(gulpif(isDebug,sourcemaps.write()))
-        .pipe(gulpif(!isDebug,uglify()))
+        .pipe(gulpif(isDebug, sourcemaps.write()))
+        .pipe(gulpif(!isDebug, uglify()))
         .pipe(gulp.dest(outputDir + path));
     
 });
 
 gulp.task('scripts-src', function () {
 
-    if (configUtils.sectionEmpty(scriptSources)) return;
+    if (configUtils.sectionEmpty(scriptSources)) {
+        return;
+    }
 
     var files = configUtils.prefixFiles(scriptSources.files, BASE_PATH);
 
@@ -112,11 +122,11 @@ gulp.task('scripts-src', function () {
     var path = info.path || '';
 
     gulp.src(files)
-        .pipe(gulpif(isDebug,sourcemaps.init()))
+        .pipe(gulpif(isDebug, sourcemaps.init()))
         .pipe(compileDirectives())
         .pipe(concat(name))
-        .pipe(gulpif(isDebug,sourcemaps.write()))
-        .pipe(gulpif(!isDebug,uglify()))
+        .pipe(gulpif(isDebug, sourcemaps.write()))
+        .pipe(gulpif(!isDebug, uglify({mangle: false})))
         .pipe(gulp.dest(outputDir + path));
 
 });
@@ -127,7 +137,10 @@ gulp.task('scripts-src', function () {
 
 gulp.task('views-compile', function () {
 
-    if (configUtils.sectionEmpty(viewsCompile)) return;
+    if (configUtils.sectionEmpty(viewsCompile)) {
+        console.log('section empty');
+        return;
+    }
 
     var files = configUtils.prefixFiles(viewsCompile.files, BASE_PATH);
 
@@ -138,23 +151,24 @@ gulp.task('views-compile', function () {
 
     return gulp.src(files)
         .pipe(templateCache(name, {
-            root: "/views/templates/",
+            root: "/views/",
             module: name.split('.')[0],
             standalone: true
         }))
-        .pipe(gulpif(!isDebug,uglify()))
+        .pipe(gulpif(!isDebug, uglify()))
         .pipe(gulp.dest(outputDir + path));
 
 });
 
 gulp.task('views-copy', function () {
 
-    if (configUtils.sectionEmpty(viewsCopy)) return;
+    if (configUtils.sectionEmpty(viewsCopy)) {
+        return;
+    }
 
     var files = configUtils.prefixFiles(viewsCopy.files, BASE_PATH);
 
-    return gulp.src(files)
-        .pipe(gulp.dest(outputDir + viewsCopy.dest));
+    return gulp.src(files).pipe(gulp.dest(outputDir + viewsCopy.dest));
 
 });
 
@@ -164,11 +178,32 @@ gulp.task('views-copy', function () {
 
 gulp.task('static', function () {
 
-    var files = [BASE_PATH + '/source/**/assets/**/*.*',BASE_PATH + '/source/*.*'];
+    var files = [BASE_PATH + '/source/**/assets/**/*.*', BASE_PATH + '/source/*.!(ejs)*'];
+    return gulp.src(files).pipe(gulp.dest(outputDir));
 
-    return gulp.src(files)
-        .pipe(ejs({debug: isDebug}))
+});
+
+// ============================================================
+// === EJS Template Compilation ===============================
+// ============================================================
+
+gulp.task('ejs', function () {
+    return gulp.src([BASE_PATH + '/source/**/*.ejs'])
+        .pipe(ejs(_.extend(config.ejsVariables, {debug: isDebug, ext: '.ejs'})))
+        .pipe(rename({extname: ".html"}))
         .pipe(gulp.dest(outputDir));
+});
+
+// ============================================================
+// === Static Files ===========================================
+// ============================================================
+
+gulp.task('node-modules-copy', function () {
+
+    if (config.project && config.project.moveNodeDependenciesToReleaseDirectory && !isDebug) {
+        return gulp.src(BASE_PATH + '/node_modules/{' + _.keys(packageJSON.dependencies).join(',') + '}/**/*')
+            .pipe(gulp.dest(outputDir + '/node_modules'));
+    }
 
 });
 
@@ -179,6 +214,6 @@ gulp.task('static', function () {
 gulp.task('run-build', [
     'styles-libs', 'styles-src',
     'scripts-libs', 'scripts-src',
-    'views-compile', 'views-copy',
+    'ejs', 'views-compile', 'views-copy', 'node-modules-copy',
     'static'
 ]);

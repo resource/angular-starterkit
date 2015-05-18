@@ -1,3 +1,5 @@
+var pkg = require('./package.json');
+
 var config = module.exports = {
 
     /**
@@ -92,10 +94,10 @@ var config = module.exports = {
         copy: {
 
             // same as styles libs
-            files: ['source/app/views/*.html'],
+            files: ['source/app/views/*.+(html|ejs)'],
 
             // same as styles libs
-            watch: ['source/app/views/*.html'],
+            watch: ['source/app/views/*.+(html|ejs)'],
 
             /**
              * By default this is set to views in order to keep some consistancy in how
@@ -109,10 +111,10 @@ var config = module.exports = {
         compile: {
 
             // same as styles libs
-            files: ['source/app/views/templates/**/*.html'],
+            files: ['source/app/views/templates/**/*.+(html|ejs)'],
 
             // same as styles libs
-            watch: ['source/app/views/templates/**/*.html'],
+            watch: ['source/app/views/templates/**/*.+(html|ejs)'],
 
             /**
              * Tempaltes are compiled into a single javascript file. The name of the script
@@ -141,6 +143,31 @@ var config = module.exports = {
             includeStackTrace: true,
             defaultTimeoutInterval: 30000
         }
+
+    },
+
+    /**
+     *
+     */
+    ejsVariables: {
+        global: {
+            environment: {
+                version: pkg.version
+            }
+        }
+    },
+
+    /**
+     * Project specific
+     */
+    project: {
+
+        /**
+         * Whether or not to move node dependencies into the release folder for the purposes of pushing to
+         * a server. This is useful if you're using the node server in production which relies on the dependencies
+         * listed in the package.json file. This is only run on a release build. (defaults to false)
+         */
+        moveNodeDependenciesToReleaseDirectory: true
 
     }
 

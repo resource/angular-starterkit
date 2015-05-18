@@ -43,7 +43,7 @@ gulp.task('write-protractor-conf', function () {
     }
 
     var pre = 'exports.config = ';
-    var post = ';'
+    var post = ';';
 
     var fileStr = pre + JSON.stringify(combinedConfig) + post;
 
@@ -59,7 +59,7 @@ gulp.task('protractor-start', ['webdriver_update'], function (done) {
     gulp.src(['../tests/e2e/**/*.js']).pipe(protractor({
         configFile: 'protractor.conf.js'
     })).on('error', function (e) {
-        console.log(e)
+        console.log(e);
     }).on('end', function () {
         done();
         process.exit();

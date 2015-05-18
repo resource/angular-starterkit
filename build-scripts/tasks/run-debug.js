@@ -8,7 +8,6 @@ var _ = require('underscore');
 var configUtils = require('../utils/config-utils');
 var config = require('../../build-config.js');
 var nodemon = require('gulp-nodemon');
-var argv = require('yargs').argv;
 
 // ============================================================
 // === Constants ==============================================
@@ -91,7 +90,7 @@ gulp.task('watch', function () {
         });
     }
 
-    var assetFiles = [BASE_PATH + '/source/**/assets/**/*.*', BASE_PATH + '/source/*.*'];
+    var assetFiles = [BASE_PATH + '/source/**/assets/**/*.*', BASE_PATH + '/source/*.!(ejs)*'];
 
     watch(assetFiles, function () {
         gulp.start('static');

@@ -28,8 +28,9 @@
     "inject": false,
     "expect": false,
     "spyOn": false,
-    "_": false,
+    "_": true,
     "require": false,
-    "browser": false
+    "browser": false,
+    "print":true
   }
 }

@@ -1,11 +1,8 @@
 var through = require('through2');
-var gutil = require('gulp-util');
 var ejs = require('ejs');
 var _ = require('underscore');
 
-const PLUGIN_NAME = 'compile-ejs';
-
-function compileDirectives(data) {
+module.exports = function (data) {
 
     data = data || {};
     data.ext = data.ext || '.html';
@@ -35,5 +32,3 @@ function compileDirectives(data) {
     });
 
 };
-
-module.exports = compileDirectives;

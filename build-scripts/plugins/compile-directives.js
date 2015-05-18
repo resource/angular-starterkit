@@ -3,10 +3,11 @@ var fs = require('fs');
 var gutil = require('gulp-util');
 var PluginError = gutil.PluginError;
 var jsStringEscape = require('js-string-escape');
+var _ = require('underscore');
 
 const PLUGIN_NAME = 'compile-directives';
 
-function compileDirectives() {
+module.exports = function() {
 
     return through.obj(function (file, enc, cb) {
 
@@ -20,28 +21,38 @@ function compileDirectives() {
 
                 var script = file.contents.toString();
                 var moduleName = script.match(/angular\.module\s*\(\s*['"](.[^'"]+)/);
-
                 var name = moduleName[1];
-                var htmlPath = script.match(/templateUrl\s*:\s*['"](.[^'"]+)['"]/);
+                var htmlPaths = script.match(/templateUrl\s*:\s*['"](.[^'"]+)['"]/g);
 
-                if (htmlPath !== null) {
+                //console.log(htmlPaths);
 
-                    htmlPath = htmlPath[1].replace(/\r|\n/, ' ');
+                _.each(htmlPaths, function (htmlPath) {
 
-                    var html;
+                    htmlPath = htmlPath.match(/templateUrl\s*:\s*['"](.[^'"]+)['"]/)[1];
 
-                    try {
-                        html = fs.readFileSync(file.base + htmlPath, 'utf8');
-                    } catch (e) {
-                        this.emit('error', new PluginError(PLUGIN_NAME, 'HTML not found for the \'' + name + '\' directive.'));
+                    if (htmlPath !== null) {
+
+                        htmlPath.replace(/\r|\n/, ' ');
+
+                        var html;
+
+                        try {
+
+                            html = fs.readFileSync(file.base + htmlPath, 'utf8');
+                        } catch (e) {
+                            this.emit('error', new PluginError(PLUGIN_NAME, 'HTML not found at' + file.base + htmlPath + ' for ' + name + 'directive.'));
+                        }
+
+                        var cacheStr = "angular.module('" + name + "').run(['$templateCache', function ($templateCache) { $templateCache.put('" + htmlPath + "', '" + jsStringEscape(html) + "');" + " }]);";
+                        var htmlBuffer = new Buffer(cacheStr, 'utf8');
+
+                        file.contents = Buffer.concat([file.contents, htmlBuffer]);
+
                     }
 
-                    var cacheStr = "angular.module('" + name + "').run(['$templateCache', function ($templateCache) { $templateCache.put('" + htmlPath + "', '" + jsStringEscape(html) + "');" + " }]);";
-                    var htmlBuffer = new Buffer(cacheStr, 'utf8');
 
-                    file.contents = Buffer.concat([file.contents, htmlBuffer]);
+                }, this);
 
-                }
 
             }
         }
@@ -51,5 +62,3 @@ function compileDirectives() {
     });
 
 };
-
-module.exports = compileDirectives;
