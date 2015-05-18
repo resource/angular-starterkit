@@ -1,5 +1,3 @@
-var pkg = require('./package.json');
-
 var config = module.exports = {
 
     /**
@@ -122,28 +120,6 @@ var config = module.exports = {
              */
             dest: 'assets/templates.js'
         }
-    },
-
-    /**
-     * Static files should be included in the assets directory. Be careful not to name static files
-     * the same as your derived as they will be overwritten.
-     */
-
-    /**
-     * See https://github.com/angular/protractor/blob/master/docs/referenceConf.js for details.
-     */
-    protractor: {
-        capabilities: {
-            browserName: 'chrome' // defaults to chrome
-        },
-        params: {},
-        jasmineNodeOpts: {
-            isVerbose: true,
-            showColors: true,
-            includeStackTrace: true,
-            defaultTimeoutInterval: 30000
-        }
-
     }
 
 };
