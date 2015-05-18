@@ -17,6 +17,7 @@ var uglify = require('gulp-uglify');
 var argv = require('yargs').argv;
 var gulpif = require('gulp-if');
 var rename = require("gulp-rename");
+var jshint = require("gulp-jshint");
 
 // ============================================================
 // === Constants ==============================================
@@ -126,6 +127,21 @@ gulp.task('scripts-src', function () {
 
 });
 
+gulp.task('scripts-lint', function () {
+
+    if (configUtils.sectionEmpty(scriptSources)) {
+        return;
+    }
+
+    var files = configUtils.prefixFiles(scriptSources.files, BASE_PATH);
+
+    return gulp.src(files)
+        .pipe(jshint())
+        .pipe(jshint.reporter('jshint-stylish'))
+        .pipe(gulpif(buildType === 'release', jshint.reporter('fail')));
+
+});
+
 // ============================================================
 // === Views ==================================================
 // ============================================================
@@ -193,7 +209,7 @@ gulp.task('ejs', function () {
 
 gulp.task('run-build', [
     'styles-libs', 'styles-src',
-    'scripts-libs', 'scripts-src',
+    'scripts-libs', 'scripts-lint', 'scripts-src',
     'ejs', 'views-compile', 'views-copy',
     'static'
 ]);

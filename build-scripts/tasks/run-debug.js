@@ -69,7 +69,7 @@ gulp.task('watch', function () {
     if (configUtils.shouldWatchSection(scriptSources)) {
         var scriptSourceFiles = configUtils.watchFilesForSection(scriptSources);
         watch(configUtils.prefixFiles(scriptSourceFiles, BASE_PATH), function () {
-            gulp.start(['scripts-src', 'views-compile']);
+            gulp.start(['scripts-lint', 'scripts-src', 'views-compile']);
         });
     }
 
@@ -98,7 +98,9 @@ gulp.task('watch', function () {
 
     // assets (static files)
 
-    var assetFiles = [BASE_PATH + '/source/**/assets/**/*.*', BASE_PATH + '/source/*.!(ejs)*'];
+    var assetFiles = [BASE_PATH + 'source/**/assets/**/*.*', BASE_PATH + 'source/*.!(ejs)*'];
+
+    console.log(assetFiles);
 
     watch(assetFiles, function () {
         gulp.start('static');

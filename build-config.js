@@ -109,10 +109,10 @@ var config = module.exports = {
         compile: {
 
             // same as styles libs
-            files: ['source/app/views/templates/**/*.+(html|ejs)'],
+            files: ['source/app/views/partial.html'],
 
             // same as styles libs
-            watch: ['source/app/views/templates/**/*.+(html|ejs)'],
+            watch: ['source/app/views/partial.html'],
 
             /**
              * Tempaltes are compiled into a single javascript file. The name of the script

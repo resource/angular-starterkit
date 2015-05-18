@@ -9,7 +9,6 @@ var karmaConfig = new KarmaConfig();
 require('../../tests/karma.conf.js')(karmaConfig);
 
 gulp.task('karma-start', function (done) {
-    process.chdir('../tests/');
     karma.start(karmaConfig, function () {
         done();
     });
