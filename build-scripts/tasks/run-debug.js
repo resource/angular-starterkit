@@ -48,6 +48,8 @@ gulp.task('launch', function () {
 
 gulp.task('watch', function () {
 
+    // styles
+
     if (configUtils.shouldWatchSection(styleLibraries)) {
         var styleLibFiles = configUtils.watchFilesForSection(styleLibraries);
         watch(configUtils.prefixFiles(styleLibFiles, BASE_PATH), function () {
@@ -61,6 +63,8 @@ gulp.task('watch', function () {
             gulp.start('styles-src');
         });
     }
+
+    // scripts
 
     if (configUtils.shouldWatchSection(scriptSources)) {
         var scriptSourceFiles = configUtils.watchFilesForSection(scriptSources);
@@ -76,6 +80,8 @@ gulp.task('watch', function () {
         });
     }
 
+    // views
+
     if (configUtils.shouldWatchSection(viewsCopy)) {
         var viewsCopySource = configUtils.watchFilesForSection(viewsCopy);
         watch(configUtils.prefixFiles(viewsCopySource, BASE_PATH), function () {
@@ -90,10 +96,19 @@ gulp.task('watch', function () {
         });
     }
 
+    // assets (static files)
+
     var assetFiles = [BASE_PATH + '/source/**/assets/**/*.*', BASE_PATH + '/source/*.!(ejs)*'];
 
     watch(assetFiles, function () {
         gulp.start('static');
+    });
+
+    // index file
+
+    var indexFile = [BASE_PATH + '/source/*.ejs'];
+    watch(indexFile, function () {
+        gulp.start('ejs');
     });
 
 });

@@ -144,31 +144,6 @@ var config = module.exports = {
             defaultTimeoutInterval: 30000
         }
 
-    },
-
-    /**
-     *
-     */
-    ejsVariables: {
-        global: {
-            environment: {
-                version: pkg.version
-            }
-        }
-    },
-
-    /**
-     * Project specific
-     */
-    project: {
-
-        /**
-         * Whether or not to move node dependencies into the release folder for the purposes of pushing to
-         * a server. This is useful if you're using the node server in production which relies on the dependencies
-         * listed in the package.json file. This is only run on a release build. (defaults to false)
-         */
-        moveNodeDependenciesToReleaseDirectory: true
-
     }
 
 };
